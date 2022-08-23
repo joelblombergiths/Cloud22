@@ -9,6 +9,7 @@ for(int i = 9; i > 0; i--)
 }
 
 Console.WriteLine();
+
 Console.WriteLine(string.Concat(Enumerable.Range(1,9).Reverse()));
 
 
