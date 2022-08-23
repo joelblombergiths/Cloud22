@@ -5,6 +5,7 @@
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
+
 static void ex1()
 {
     Console.WriteLine("Hello");
@@ -194,7 +195,7 @@ static void ex17()
     Console.WriteLine("Input text: ");
     string text = Console.ReadLine();
 
-    string? newText = !string.IsNullOrEmpty(text) ? $"{text[0]}{text}{text[0]}" : text;
+    string newText = !string.IsNullOrEmpty(text) ? $"{text[0]}{text}{text[0]}" : text;
     Console.WriteLine($"New text: {newText}");
 }
 
@@ -326,3 +327,231 @@ static void ex27()
     Console.WriteLine($"The sum of the digits in {text} is {sum}");
 }
 
+static void ex28()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string reversed = string.Join(" ", text.Split(' ').Reverse());
+    Console.WriteLine(reversed);
+}
+
+static void ex29()
+{
+    Console.WriteLine("Input path to file: ");
+    string text = Console.ReadLine();
+    FileInfo fi = new(text);
+
+    if (fi.Exists) Console.WriteLine($"Size: {fi.Length}");
+    else Console.WriteLine("File does not exist");
+}
+
+static void ex30()
+{
+    Console.WriteLine("Input HEX: ");
+    string hex = Console.ReadLine();
+
+    int dec = Convert.ToInt32(hex,16);
+    Console.WriteLine(dec);
+}
+
+static void ex31()
+{
+    int[] a1 = { 1, 3, -5, 4 };
+    int[] a2 = { 1, 4, -5, -2 };
+
+    for(int i = 0; i < a1.Length; i++)
+    {
+        Console.Write($"{a1[i] * a2[i]} ");
+    }    
+}
+
+static void ex32()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string result = text.Length < 4 ? text : string.Format("{0}{0}{0}{0}", text[^4..^0]);
+    Console.WriteLine(result);
+}
+
+static void ex33()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match;
+    if (n > 0 && (n % 3 == 0 || n % 7 == 0)) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex34()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    bool match;
+    if (text.StartsWith("Hello")) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex35()
+{
+    Console.WriteLine("Input number < 100: ");
+    int n1 = int.Parse(Console.ReadLine());
+    Console.WriteLine("Input number > 200: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match;
+    if (n1 < 100 && n2 > 200) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex36()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match;
+    if((n1 >= -10 && n1 <= 10) || (n2 >= -10 && n2 <= 10)) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex37()
+{
+    string text = "PHP Tutorial";
+
+    string result;
+    if (text.Substring(1, 2).Equals("HP")) result = text.Replace("HP", string.Empty);
+    else result = text;
+
+    Console.WriteLine(result);
+}
+
+static void ex38()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine().ToUpper();
+
+    if (text[0] == 'P' && text[1] == 'H') Console.WriteLine($"{text[0]}{text[1]}");
+}
+
+static void ex39()
+{
+    List<int> numbers = new();
+    Console.WriteLine("Input first number: ");
+    numbers.Add(int.Parse(Console.ReadLine()));
+    Console.WriteLine("Input seccond number: ");
+    numbers.Add(int.Parse(Console.ReadLine()));
+    Console.WriteLine("Input third number: ");
+    numbers.Add(int.Parse(Console.ReadLine()));
+
+    numbers = numbers.OrderBy(x => x).ToList();
+    Console.WriteLine($"Lowest: {numbers.First()}");
+    Console.WriteLine($"Highest: {numbers.Last()}");
+}
+
+static void ex40()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int result;
+    int n1Diff = Math.Abs(20 - n1);
+    int n2Diff = Math.Abs(20 - n2);
+    if (n1Diff == n2Diff) result = 0;
+    else result = n1Diff < n2Diff ? n1 : n2;
+
+    Console.WriteLine(result);
+}
+
+static void ex41()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    int countW = text.Where(x => x.Equals('w')).Count();
+    bool match;
+    if (countW >= 1 && countW <= 3) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex42()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string result;
+    if (text.Length < 4) result = text.ToUpper();
+    else result = $"{text[0..3].ToLower()}{text[4..^0]}";
+
+    Console.WriteLine(result);
+}
+
+static void ex43()
+{
+    //retarded...
+}
+
+static void ex44()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    for (int i = 0; i < text.Length; i++)
+    {
+        if (i % 2 == 0) Console.Write(text[i]);
+    }
+}
+
+static void ex45()
+{
+    List<int> list = new();
+    for(int i = 0; i < 100; i++)
+    {
+        list.Add(Random.Shared.Next(1, 10));
+    }
+    
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    int count = list.Where(x => x.Equals(n)).Count();
+    Console.WriteLine($"{n} occurs {count} times");
+}
+
+static void ex46()
+{
+    List<int> list = new();
+    for (int i = 0; i < 100; i++)
+    {
+        list.Add(Random.Shared.Next(1, 10));
+    }
+
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match;
+    if (list.Any() && (list.First().Equals(n) || list.Last().Equals(n))) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex47()
+{
+
+}
