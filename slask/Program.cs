@@ -17,9 +17,11 @@ Console.WriteLine();
 Console.WriteLine();
 Console.WriteLine("Mini Upg 2");
 Console.Write("Name, please: ");
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 string name = Console.ReadLine();
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
-for(int i = 0; i < 10; i++)
+for (int i = 0; i < 10; i++)
 {
     Console.WriteLine(name);
 }
