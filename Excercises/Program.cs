@@ -553,5 +553,164 @@ static void ex46()
 
 static void ex47()
 {
+    List<int> list = new();
+    for (int i = 0; i < 100; i++)
+    {
+        list.Add(Random.Shared.Next(1, 10));
+    }
 
+    Console.WriteLine(list.Sum());
 }
+
+static void ex48()
+{
+    List<int> list = new();
+    for (int i = 0; i < 100; i++)
+    {
+        list.Add(Random.Shared.Next(1, 10));
+    }   
+
+    bool match;
+    if (list.Any() && list.First().Equals(list.Last())) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex49()
+{
+    List<int> list = new();
+    for (int i = 0; i < 100; i++)
+    {
+        list.Add(Random.Shared.Next(1, 10));
+    }
+
+    List<int> list2 = new();
+    for (int i = 0; i < 100; i++)
+    {
+        list2.Add(Random.Shared.Next(1, 10));
+    }
+
+    bool match;
+    if (list.Any())
+    { 
+        if(list.First().Equals(list2.First())) match = true;
+        else if (list.Last().Equals(list2.Last())) match = true;
+        else match = false;
+    }
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex50()
+{
+    int[] a = new[] { 1, 2, 8 };
+    Console.WriteLine(string.Join(" ", a));
+    Console.WriteLine(string.Join(" ", a.Prepend(a[^1]).SkipLast(1)));    
+}
+
+static void ex51()
+{
+    List<int> list = new();
+    for (int i = 0; i < 10; i++)
+    {
+        list.Add(Random.Shared.Next(1, 100));
+    }
+
+    Console.WriteLine(string.Join(" ", list));
+    int largest = list.OrderBy(x => x).Last();
+
+
+    Console.WriteLine(largest);
+}
+
+static void ex52()
+{
+    int[] a1 = new[] { 1, 2, 5 };
+    int[] a2 = new[] { 0, 3, 8 };
+    int[] a3 = new[] { -1, 3, 0 };
+
+    int[] newA = { a1[2], a2[2], a3[2] };
+
+    Console.WriteLine(string.Join(" ", newA));
+}
+
+static void ex53()
+{
+    List<int> list = new();
+    for (int i = 0; i < 10; i++)
+    {
+        list.Add(Random.Shared.Next(1, 100));
+    }
+
+    Console.WriteLine(string.Join(" ", list));
+
+    Console.WriteLine(list.Any(x => x % 2 != 0));
+}
+
+static void ex54()
+{
+    Console.WriteLine("Input year: ");
+    string year = Console.ReadLine();
+
+    Console.WriteLine(year[0..2]);
+}
+
+static void ex55()
+{
+   //full retard
+}
+
+static void ex56()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    bool match;
+    if (text.Equals(string.Join("", text.Reverse().ToArray()))) match = true;
+    else match = false;
+
+    Console.WriteLine(match);
+}
+
+static void ex57()
+{
+    List<int> list = new();
+    for (int i = 0; i < 10; i++)
+    {
+        list.Add(Random.Shared.Next(1, 100));
+    }
+
+    int max = int.MinValue;
+    (int, int) pair = new();
+    for (int i = 0; i < list.Count - 1; i++)
+    {
+        int sum = list[i] * list[i + 1];
+        if (sum > max)
+        {
+            max = sum;
+            pair = (list[i], list[i + 1]);
+        }
+    }
+
+    Console.WriteLine($"{pair.Item1} and {pair.Item2} has the largest sum of {max}");
+}
+
+static void ex58()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    list.Sort();
+
+    int first = list.First();
+    int last = list.Last();
+
+    int missing = last - first - list.Count;
+    Console.WriteLine(missing);
+}
+ex58();
