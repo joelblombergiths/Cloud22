@@ -705,12 +705,67 @@ static void ex58()
     List<int> list = new();
     list.AddRange(text.Split(',').Select(x => int.Parse(x)));
 
+    list.Sort();    
+    int missing = (list.Last() - list.First() - list.Count) + 1;
+
+    Console.WriteLine(missing); 
+}
+
+static void ex59()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
     list.Sort();
 
-    int first = list.First();
-    int last = list.Last();
+    bool match = true;
+    for (int i = 0; i < list.Count -2; i++)
+    {
+        if (list[i] == list[i + 1])
+        {
+            match = false;
+            break;
+        }
+    }
 
-    int missing = last - first - list.Count;
-    Console.WriteLine(missing);
+    Console.WriteLine(match);
 }
-ex58();
+
+static void ex60()
+{
+
+    //full retard deluxe...
+
+    int[,] matrix = new int[3, 4] { { 0, 2, 3, 2 }, { 0, 6, 0, 1 }, { 4, 0, 3, 0 } };
+
+
+    int sum = 0;
+    for (int x = 0; x < 3; x++)
+    {        
+        for (int y = 0; y < 4; y++)
+        {
+            Console.Write($"{matrix[x,y]} ");
+            if (matrix[x, y] > 0) sum += matrix[x, y];
+        }
+        Console.WriteLine();
+    }
+    Console.WriteLine(sum);
+}
+
+static void ex61()
+{
+    int[] list = new[] { 5, 3, 1, -5, 9 };
+    Console.WriteLine(string.Join(" ", list));
+    
+
+    int[] sort = list.Where(x => x != -5).OrderBy(x => x).ToArray();
+
+    int i = 0;
+    int[] sorted = list.Select(x => x != -5 ? list[i++] : -5).ToArray();
+
+    Console.WriteLine(string.Join(" ",sorted));
+}
+ex61();
