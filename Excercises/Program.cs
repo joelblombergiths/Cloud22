@@ -6,6 +6,8 @@
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 
+using System.Net.Http.Headers;
+
 static void ex1()
 {
     Console.WriteLine("Hello");
@@ -784,7 +786,68 @@ static void ex62()
 
         string part = text[(start + 1)..end];
         Console.WriteLine(string.Join(" ", part.Split(' ').Reverse()));
-        text = text.Remove(start, (end - start) + 1);
+        text = text.Remove(start, end - start + 1);
     } while (true);
 }
-ex62();
+
+static void ex63()
+{
+    List<int> list = new();
+    for (int i = 0; i < 10; i++)
+    {
+        list.Add(Random.Shared.Next(1, 100));
+    }
+    
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    if (list.Contains(n)) Console.WriteLine("Exists");
+    else Console.WriteLine("Doesn't exists");
+}
+
+static void ex64()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    FileInfo fi = new(text);
+
+    Console.WriteLine($"Filename: {fi.Name}");
+}
+
+static void ex65()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    Console.WriteLine(string.Join(",", list.Select(x => x * list.Count)));
+}
+
+static void ex66()
+{
+    string n1 = "3";
+    string n2 = "7";
+
+    if (int.Parse(n1) < int.Parse(n2)) Console.WriteLine($"{n1} is the smallest number");
+    else Console.WriteLine($"{n2} is the smallest number");
+}
+
+static void ex67()
+{
+    // 'P' with '9', 'T' with '0', 'S' with '1', 'H' with '6' and 'A' with '8'.
+
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string result = text.Replace('P', '9').Replace('T', '0').Replace('S', '1').Replace('H', '6').Replace('A', '8');
+
+    Console.WriteLine(result);
+}
+
+static void ex68()
+{
+
+}
