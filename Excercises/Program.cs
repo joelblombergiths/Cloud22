@@ -768,4 +768,23 @@ static void ex61()
 
     Console.WriteLine(string.Join(" ",sorted));
 }
-ex61();
+
+static void ex62()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    do
+    {
+        int start = text.IndexOf('(');
+        if (start == -1) break;
+
+        int end = text.IndexOf(')');
+        if (end == -1) break;
+
+        string part = text[(start + 1)..end];
+        Console.WriteLine(string.Join(" ", part.Split(' ').Reverse()));
+        text = text.Remove(start, (end - start) + 1);
+    } while (true);
+}
+ex62();
