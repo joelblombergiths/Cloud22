@@ -6,7 +6,7 @@
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 
-using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 
 static void ex1()
 {
@@ -849,5 +849,300 @@ static void ex67()
 
 static void ex68()
 {
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
 
+    Console.WriteLine("Input character: ");
+    string c = Console.ReadLine().ToLower();
+
+    Console.WriteLine(text.ToLower().Count(x => x.Equals(c[0])));
 }
+
+static void ex69()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    if(text.All(x => char.IsUpper(x))) Console.WriteLine("All Uppercase");
+    else if (text.All(x => char.IsLower(x))) Console.WriteLine("All Lowercase");
+    else Console.WriteLine("Mixed cases");
+}
+
+static void ex70()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine(text[1..^1]);
+}
+
+static void ex71()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    bool match = false;
+    for (int i = 0; i < text.Length -1; i++)
+    {
+        if (char.ToLower(text[i]).Equals(char.ToLower(text[i+1])))
+        {
+            match = true;
+            break;
+        }
+    }
+
+    Console.WriteLine(match);
+}
+
+static void ex72()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    if (list.Average() % 1 == 0) Console.WriteLine("Avg is int");
+    else Console.WriteLine("Avg is decimal");
+}
+
+static void ex73()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string result = string.Join("", text.ToArray().OrderBy(x => x));
+
+    Console.WriteLine(result);
+}
+
+static void ex74()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string result = text.Length % 2 == 0 ? "Even" : "Odd";
+
+    Console.WriteLine($"length is {result}");
+}
+
+static void ex75()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    Console.WriteLine($"the {n} odd number is {2 * n - 1}");
+}
+
+static void ex76()
+{
+    Console.WriteLine("Input character: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine($"ASCII for {text} is {(int)text[0]}");
+}
+
+static void ex77()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine($"{text} is plural? {text.EndsWith("s")}");
+}
+
+static void ex78()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    double sum = 0;
+    list.ForEach(x => sum += Math.Sqrt(x));
+
+    Console.WriteLine(sum);
+}
+
+static void ex79()
+{
+    string s1 = "7";
+    Console.WriteLine($"value: {s1} type: {s1.GetType()}");
+    int i1 = int.Parse(s1);
+    Console.WriteLine($"value: {i1} type: {i1.GetType()}");
+    
+    Console.WriteLine("-");
+    
+    int i2 = 3;
+    Console.WriteLine($"value: {i2} type: {i2.GetType()}");
+    string s2 = i2.ToString();
+    Console.WriteLine($"value: {s2} type: {s2.GetType()}");
+}
+
+static void ex80()
+{
+    object[] list = new object[] { 7, "Bear", true, DateTime.Now, 13.6f };
+
+    foreach (object obj in list)
+    {
+        Console.WriteLine($"value: {obj} type: {obj.GetType()}");
+    }
+
+    Console.WriteLine("-");
+
+    foreach (object obj in list)
+    {
+        string s = obj.ToString();
+        Console.WriteLine($"value: {s} type: {s.GetType()}");
+    }
+}
+
+static void ex81()
+{
+    Console.WriteLine("Input number: ");
+    string text = Console.ReadLine();
+    if(text.Length != 2) return;
+
+    int reversed = int.Parse(string.Join("", text.ToArray().Reverse()));
+
+    Console.WriteLine(reversed < int.Parse(text));
+}
+
+static void ex82()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine(Regex.Replace(text, @"[^A-Za-z]", string.Empty));
+}
+
+static void ex83()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine(Regex.Replace(text, @"[AOUEI]", string.Empty));
+}
+
+static void ex84()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+    
+    for (int i = 0; i < text.Length; i++)
+    {
+        if (char.IsLower(text[i])) Console.Write($"{i} ");
+    }    
+}
+
+static void ex85()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    
+    for (int i = 0; i < list.Count; i++)
+    {
+        int sum = 0;
+        for (int j = 0; j <= i; j++)
+        {
+            sum += list[j];            
+        }
+        Console.Write($"{sum} ");
+    }
+}
+
+static void ex86()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    int numLetter = text.Count(x => char.IsLetter(x));
+    int numDigits = text.Count(x => char.IsDigit(x));
+
+    Console.WriteLine($"Num letters: {numLetter}, Num digits: {numDigits}");
+}
+
+static void ex87()
+{
+    bool b = true;
+    Console.WriteLine($"org value {b}");
+    Console.WriteLine($"reverse value {!b}");
+}
+
+static void ex88()
+{
+    // (n-2) x 180
+    Console.WriteLine("Input number of lines: ");
+    int n = int.Parse(Console.ReadLine());
+
+    Console.WriteLine($"Interior angle is {(n-2) * 180}");
+}
+
+static void ex89()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+    
+    int numNegatives = list.Count(x => x < 0);
+    int numPositives = list.Count(x => x >= 0);
+
+    Console.WriteLine($"Negatives: {numNegatives}");
+    Console.WriteLine($"Positives: {numPositives}");
+}
+
+static void ex90()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    string binary = Convert.ToString(n, 2);
+    Console.WriteLine(binary);
+
+    int numOnes = binary.Count(x => x.Equals('1'));
+    int numZeros = binary.Count(x => x.Equals('0'));
+
+    Console.WriteLine($"Ones: {numOnes}");
+    Console.WriteLine($"Zeros: {numZeros}");
+}
+
+static void ex91()
+{
+    object[] list = new object[] { 7, "Bear", true, DateTime.Now, 13.6f };
+
+    Console.WriteLine(string.Join("",list.Where(x => x is int)));
+}
+
+static void ex92()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+    
+    int counter = n;
+    bool isPrime;
+    int pn = 1;
+    do
+    {
+        isPrime = true;
+        for (int i = 2; i < counter; i++)
+        {
+            if (counter % i == 0)
+            {
+                isPrime = false;
+                break;
+            }
+        }
+        if (isPrime) pn = counter;
+        else counter++;
+    }
+    while (!isPrime);
+
+    Console.WriteLine($"Next prime: {pn}");
+}
+ex92();
