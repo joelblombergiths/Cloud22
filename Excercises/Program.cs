@@ -208,9 +208,8 @@ static void ex18()
     Console.WriteLine("Input seccond number: ");
     int n2 = int.Parse(Console.ReadLine());
 
-    bool match;
+    bool match = false;
     if ((n1 >= 0 && n2 < 0) || (n2 >= 0 && n1 < 0)) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -249,10 +248,9 @@ static void ex21()
     int n2 = int.Parse(Console.ReadLine());
 
     int sum = n1 + n2;
-    bool match;
+    bool match = false;
 
     if (sum == 20 || n1 == 20 || n2 == 20) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -262,9 +260,8 @@ static void ex22()
     Console.WriteLine("Input number: ");
     int n = int.Parse(Console.ReadLine());
 
-    bool match;
+    bool match = false;
     if (Math.Abs(100 - n) <= 20 || Math.Abs(200 - n) <= 20) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -297,7 +294,7 @@ static void ex25()
 
 static void ex26()
 {
-    List<int> primeNumbers = new List<int>();
+    List<int> primeNumbers = new();
 
     int counter = 2;
     do
@@ -353,7 +350,7 @@ static void ex30()
     Console.WriteLine("Input HEX: ");
     string hex = Console.ReadLine();
 
-    int dec = Convert.ToInt32(hex,16);
+    int dec = Convert.ToInt32(hex, 16);
     Console.WriteLine(dec);
 }
 
@@ -382,9 +379,8 @@ static void ex33()
     Console.WriteLine("Input number: ");
     int n = int.Parse(Console.ReadLine());
 
-    bool match;
+    bool match = false;
     if (n > 0 && (n % 3 == 0 || n % 7 == 0)) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -394,9 +390,8 @@ static void ex34()
     Console.WriteLine("Input text: ");
     string text = Console.ReadLine();
 
-    bool match;
+    bool match = false; 
     if (text.StartsWith("Hello")) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -408,9 +403,8 @@ static void ex35()
     Console.WriteLine("Input number > 200: ");
     int n2 = int.Parse(Console.ReadLine());
 
-    bool match;
-    if (n1 < 100 && n2 > 200) match = true;
-    else match = false;
+    bool match = false;
+    if (n1 < 100 && n2 > 200) match = true;   
 
     Console.WriteLine(match);
 }
@@ -422,9 +416,8 @@ static void ex36()
     Console.WriteLine("Input seccond number: ");
     int n2 = int.Parse(Console.ReadLine());
 
-    bool match;
+    bool match = false;
     if((n1 >= -10 && n1 <= 10) || (n2 >= -10 && n2 <= 10)) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -485,9 +478,9 @@ static void ex41()
     string text = Console.ReadLine();
 
     int countW = text.Where(x => x.Equals('w')).Count();
-    bool match;
+
+    bool match = false;
     if (countW >= 1 && countW <= 3) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -506,7 +499,16 @@ static void ex42()
 
 static void ex43()
 {
-    //retarded...
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    bool match = false;
+    if(text.StartsWith('w'))
+    {
+        if(text.Substring(1,2) == "ww" && text.Substring(1, 2) == "ww") match = true;
+    }
+
+    Console.WriteLine(match);
 }
 
 static void ex44()
@@ -546,9 +548,8 @@ static void ex46()
     Console.WriteLine("Input number: ");
     int n = int.Parse(Console.ReadLine());
 
-    bool match;
+    bool match = false;
     if (list.Any() && (list.First().Equals(n) || list.Last().Equals(n))) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -572,9 +573,8 @@ static void ex48()
         list.Add(Random.Shared.Next(1, 10));
     }   
 
-    bool match;
+    bool match = false;
     if (list.Any() && list.First().Equals(list.Last())) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -593,14 +593,13 @@ static void ex49()
         list2.Add(Random.Shared.Next(1, 10));
     }
 
-    bool match;
+    bool match = false;
     if (list.Any())
     { 
         if(list.First().Equals(list2.First())) match = true;
         else if (list.Last().Equals(list2.Last())) match = true;
         else match = false;
     }
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -669,9 +668,8 @@ static void ex56()
     Console.WriteLine("Input text: ");
     string text = Console.ReadLine();
 
-    bool match;
+    bool match = false;
     if (text.Equals(string.Join("", text.Reverse().ToArray()))) match = true;
-    else match = false;
 
     Console.WriteLine(match);
 }
@@ -738,24 +736,27 @@ static void ex59()
 
 static void ex60()
 {
-
-    //full retard deluxe...
-
     int[,] matrix = new int[3, 4] { { 0, 2, 3, 2 }, { 0, 6, 0, 1 }, { 4, 0, 3, 0 } };
-
-
-    int sum = 0;
+            
+    List<int> eligibleValues = new();
     for (int x = 0; x < 3; x++)
     {        
         for (int y = 0; y < 4; y++)
         {
-            Console.Write($"{matrix[x,y]} ");
-            if (matrix[x, y] > 0) sum += matrix[x, y];
+            if (x > 0 && matrix[x - 1, y] == 0) Console.Write("X ");
+            else
+            {
+                Console.Write($"{matrix[x, y]} ");
+
+                if (matrix[x,y] != 0) eligibleValues.Add(matrix[x, y]);
+            }
         }
         Console.WriteLine();
     }
-    Console.WriteLine(sum);
+    
+    Console.WriteLine($"sum of {string.Join(" + ", eligibleValues)} = {eligibleValues.Sum()}");
 }
+ex60();
 
 static void ex61()
 {
@@ -768,7 +769,7 @@ static void ex61()
     int i = 0;
     int[] sorted = list.Select(x => x != -5 ? list[i++] : -5).ToArray();
 
-    Console.WriteLine(string.Join(" ",sorted));
+    Console.WriteLine(string.Join(" ", sorted));
 }
 
 static void ex62()
@@ -1145,4 +1146,3 @@ static void ex92()
 
     Console.WriteLine($"Next prime: {pn}");
 }
-ex92();
