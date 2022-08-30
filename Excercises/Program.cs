@@ -5,10 +5,11 @@
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
-
-using System.Diagnostics.Metrics;
-using System.Runtime.CompilerServices;
+using System.Collections.Concurrent;
+using System.Reflection;
 using System.Text.RegularExpressions;
+
+// -- Basic --
 
 static void ex1()
 {
@@ -146,21 +147,20 @@ static void ex12()
 
 static void ex13()
 {
-    Console.WriteLine("Input number: ");
-    int n = int.Parse(Console.ReadLine());
-
-    int numRows = 5;
+    Console.WriteLine("Input number of rows: ");
+    int numRows = int.Parse(Console.ReadLine());
 
     for (int row = 0; row < numRows; row++)
     {
         switch (row)
         {
             case 0:
-            case int _ when row == numRows -1: Console.WriteLine($"{n}{n}{n}"); break;
-            default: Console.WriteLine($"{n} {n}"); break;
+            case int _ when row == numRows -1: Console.WriteLine($"{numRows}{numRows}{numRows}"); break;
+            default: Console.WriteLine($"{numRows} {numRows}"); break;
         }
     }
 }
+
 
 static void ex14()
 {
@@ -1213,4 +1213,447 @@ static void ex95()
 
     Console.WriteLine(checkRec(text));    
 }
-ex95();
+
+
+// -- Basic Algorithms --
+
+static void b1()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int sum = n1 + n2;
+    if (n1 == n2) sum *= 3;
+
+    Console.WriteLine(sum);
+}
+
+static void b2()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    int diff = Math.Abs(n - 51);
+    if (n > 51) diff *= 3;
+
+    Console.WriteLine(diff);
+}
+
+static void b3()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n1 > 30 || n2 > 30 || n1 + n2 > 30) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b4()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (Math.Abs(100 - n) <= 10 || Math.Abs(200 - n) <= 10) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b5()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    if (!text.StartsWith("if")) text = $"if {text}";
+
+    Console.WriteLine(text);
+}
+
+static void b6()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine("Input index: ");
+    int n = int.Parse(Console.ReadLine());
+
+    if (n < 0 || n >= text.Length) Console.WriteLine("Index out of bounds");
+    else Console.WriteLine(text.Remove(n, 1));
+}
+
+static void b7()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string newText = text.Length > 1 ? $"{text[^1]}{text[1..^1]}{text[0]}" : text;
+    Console.WriteLine(newText);
+}
+
+static void b8()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    if (text.Length < 2) Console.WriteLine(text);
+    else Console.WriteLine("{0}{0}{0}{0}",text[..2]);
+}
+
+static void b9()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string newText = !string.IsNullOrEmpty(text) ? $"{text[^1]}{text}{text[^1]}" : text;
+    Console.WriteLine($"New text: {newText}");
+}
+
+static void b10()
+{
+    Console.WriteLine("Input index: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n >= 0 && (n % 3 == 0 || n % 7 == 0)) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b11()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    if (text.Length < 3) Console.WriteLine("{0}{0}{0}", text);
+    else Console.WriteLine($"{text[..3]}{text}{text[..3]}");
+}
+
+static void b12()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine(text.StartsWith("C#"));
+}
+
+static void b13()
+{
+    Console.WriteLine("Input first temperature: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond temperature: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n1 < 0 && n2 > 100) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b14()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (Enumerable.Range(100, 201).Contains(n1) || Enumerable.Range(100, 201).Contains(n2)) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b15()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    List<bool> match = new()
+    {
+        Enumerable.Range(20, 51).Contains(n1),
+        Enumerable.Range(20, 51).Contains(n2),
+        Enumerable.Range(20, 51).Contains(n3)
+    };
+
+    Console.WriteLine(match.Any(x => x));
+}
+
+static void b16()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+        
+    //Console.WriteLine($"n1 <= 20: {n1 <= 20}");
+    //Console.WriteLine($"n2 >= 50: {n2 >= 50}");
+    //Console.WriteLine($"(n1 <= 20 || n2 >= 50): {(n1 <= 20 || n2 >= 50)}");
+    //Console.WriteLine($"n2 <= 20: {n2 <= 20}");
+    //Console.WriteLine($"n1 >= 50: {n1 >= 50}");
+    //Console.WriteLine($"(n2 <= 20 || n1 >= 50): {(n2 <= 20 || n1 >= 50)}");
+    //Console.WriteLine($"(n1 <= 20 || n2 >= 50) || (n2 <= 20 || n1 >= 50): {(n1 <= 20 || n2 >= 50) || (n2 <= 20 || n1 >= 50)}");
+
+    bool match = false;
+    if ((n1 >= 20 && n1 <= 50) ^ (n2 >= 20 && n2 <= 50)) match = true;    
+    Console.WriteLine(match);
+}
+
+static void b17()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    if (text[1..].StartsWith("yt")) Console.WriteLine(text.Replace("yt", string.Empty));
+    else Console.WriteLine(text);
+}
+
+static void b18()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    int max = n1;
+    if (n2 > max) max = n2;
+    if (n3 > max) max = n3;
+
+    Console.WriteLine(max);
+}
+
+static void b19()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int n1Diff = Math.Abs(100 - n1);
+    int n2Diff = Math.Abs(100 - n2);
+
+    int nearest;
+    if (n1Diff == n2Diff) nearest = 0;
+    else nearest = n1Diff > n2Diff ? n1Diff : n2Diff;
+
+    Console.WriteLine(nearest);
+}
+
+static void b22()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    int countY = text.ToArray().Count(x => x.Equals('y'));
+
+    bool match = false;
+    if (countY >= 2 && countY <= 4) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b23()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if ((n1 % 10) == (n2 % 10)) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b24()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    if (text.Length < 3) Console.WriteLine(text.ToUpper());
+    else Console.WriteLine($"{text[..^3]}{text[^3..].ToUpper()}");
+}
+
+static void b25()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine("Input count: ");
+    int n = int.Parse(Console.ReadLine());
+
+    for(int i = 0; i < n; i++)
+    {
+        Console.Write(text);
+    }
+}
+
+static void b26()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine("Input count: ");
+    int n = int.Parse(Console.ReadLine());
+
+    string newString;
+    if (text.Length < 3) newString = text;
+    else newString = $"{text[..^3]}{text[^3..].ToUpper()}";
+
+    for (int i = 0; i < n; i++)
+    {
+        Console.Write(newString);
+    }
+}
+
+static void b27()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    int count = 0;
+    for (int i = 0; i < text.Length - 1; i++)
+    {
+        if (text[i] == 'a' && text[i + 1] == 'a') count++;
+    }
+
+    Console.WriteLine(count);
+}
+
+static void b28()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    int firstA = text.IndexOf('a');
+
+    bool match = false;
+    if (text[firstA + 1] == 'a') match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b29()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    for (int i = 0; i < text.Length; i += 2)
+    {
+        Console.Write(text[i]);
+    }
+}
+
+static void b30()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    for (int i = 1; i <= text.Length; i++)
+    {
+        Console.Write(text[0..i]);
+    }
+}
+
+static void b31()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    
+    int count = 0;
+    if (text.Length > 1)
+    {
+        string s = text[^2..];
+
+        for (int i = 0; i < text.Length - 2; i++)
+        {
+            if (text[i..(i + 2)] == s) count++;
+        }
+    }
+    Console.WriteLine(count);
+}
+
+static void b32()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    Console.WriteLine("Input search value: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (list.Contains(n)) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b33()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    Console.WriteLine("Input search value: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (list.Take(4).Contains(n)) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b34()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    bool match = false;
+    for (int i = 0; i < list.Count - 2; i++)
+    {
+        if (list[i] == 1 && list[i + 1] == 2 && list[i + 2] == 3)
+        {
+            match = true;
+            break;
+        }
+    }
+
+    Console.WriteLine(match);
+}
+
+
+
+while(true)
+{
+    b34();
+    Console.ReadKey();
+}
