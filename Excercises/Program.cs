@@ -6,6 +6,8 @@
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 
+using System.Diagnostics.Metrics;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
 static void ex1()
@@ -756,7 +758,6 @@ static void ex60()
     
     Console.WriteLine($"sum of {string.Join(" + ", eligibleValues)} = {eligibleValues.Sum()}");
 }
-ex60();
 
 static void ex61()
 {
@@ -1124,10 +1125,11 @@ static void ex92()
 {
     Console.WriteLine("Input number: ");
     int n = int.Parse(Console.ReadLine());
-    
-    int counter = n;
+
+    int pn = 0;
+    int counter = n + 1;
     bool isPrime;
-    int pn = 1;
+    
     do
     {
         isPrime = true;
@@ -1146,3 +1148,69 @@ static void ex92()
 
     Console.WriteLine($"Next prime: {pn}");
 }
+
+static void ex93()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+           
+    int counter = 0;
+    do
+    {
+        counter++;
+    }
+    while (counter * counter < n);
+
+    int sqrt;
+    if (counter * counter == n) sqrt = counter;
+    else sqrt = counter - 1;
+
+    Console.WriteLine($"sqrt({n}) = {sqrt}");
+}
+
+static void ex94()
+{
+    List<string> list = new() { "Bort", "Whang", "Yarder", "Zoonic" };
+
+    list = list.OrderBy(s => s.Length).ToList();
+
+    string prefix = string.Empty;
+    for(int i = 0; i < list.First().Length; i++)
+    {
+        string c = list.First().Substring(i, 1);
+        if (list.All(s => s.Substring(i, 1).Equals(c))) prefix += c;
+        else break;
+    }
+    Console.WriteLine($"\"{prefix}\"");
+}
+
+static void ex95()
+{
+    static bool checkRec(string s, string s2 = "")
+    {
+        if (s.Length == 0)
+        {
+            if (s2.Length > 0) return checkRec(s2);
+            else return true;
+        }
+
+        char opposite = s[0] switch
+        {
+            '{' => '}',
+            '(' => ')',
+            '[' => ']',
+            '<' => '>',
+            _ => char.MinValue
+        };
+
+        int closeIndex = s.LastIndexOf(opposite);
+
+        if (closeIndex < 0) return false;
+        else return checkRec(s[1..closeIndex], s[(closeIndex + 1)..^0]);
+    }
+
+    string text = "[<>()[]{}]";
+
+    Console.WriteLine(checkRec(text));    
+}
+ex95();
