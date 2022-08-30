@@ -6,6 +6,7 @@
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
 
 using System.Collections.Concurrent;
+using System.Net.WebSockets;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
@@ -1650,10 +1651,406 @@ static void b34()
     Console.WriteLine(match);
 }
 
-
-
-while(true)
+static void b35()
 {
-    b34();
+    Console.WriteLine("Input first text: ");
+    string text1 = Console.ReadLine();
+
+    Console.WriteLine("Input second text: ");
+    string text2 = Console.ReadLine();
+
+    List<string> values = new() {text1, text2 };
+    values = values.OrderBy(x => x.Length).ToList();
+
+    int count = 0;
+    for (int i = 0; i < values.First().Length; i += 2)
+    {
+        string s = values.First().Substring(i, 2);
+
+        for (int j = 0; j < values.Last().Length; j += 2)
+        {
+            if (values.Last().Substring(j, 2).Equals(s)) count++;
+        }
+    }
+
+    Console.WriteLine(count);
+}
+
+static void b36()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    Console.WriteLine("Input character to remove: ");
+    string remove = Console.ReadLine();
+
+    Console.Write(text[0]);
+    foreach (char c in text[1..^1])
+    {
+        if (c != remove[0]) Console.Write(c);
+    }
+    Console.Write(text[^1]);
+}
+
+static void b37()
+{
+    //Sämst skriven fråga so far...
+
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    int counter = 0;
+    
+    while(counter < text.Length - 1)
+    {
+        Console.Write($"{text[counter]}{text[counter + 1]}");
+        counter += 4;
+    }
+}
+
+
+static void b38()
+{
+    // "Also count the situation where the second 5 is actually a 6" ;-D
+
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    int count = 0;
+    for (int i = 0; i < list.Count - 1; i++)
+    {
+        if (list[i] == 5 && (list[i + 1] == 5 || list[i + 1] == 6)) count++;
+    }
+
+    Console.WriteLine(count);
+}
+
+static void b39()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    bool match = false;
+    for (int i = 0; i < list.Count - 2; i++)
+    {
+        if (list[i + 1] == list[i] && list[i + 2] == list[i]) match = true;
+    }
+
+    Console.WriteLine(match);
+}
+
+static void b40()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int sum = n1 + n2;
+    if (sum >= 10 || sum <= 30) sum = 30;
+
+    Console.WriteLine(sum);
+}
+
+static void b41()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n1 == 5 || n2 == 5 || n1 + n2 == 5 || Math.Abs(n1 - n2) == 5) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b42()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n % 13 <= 1) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b43()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n % 3 == 0 ^ n % 7 == 0) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b44()
+{
+    Console.WriteLine("Input number: ");
+    int n = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n % 10 <= 2) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b45()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int sum = n1 + n2;
+
+    if ((n1 >= 10 && n1 <= 20) || (n2 >= 10 && n2 <= 20)) sum = 18;
+
+    Console.WriteLine(sum);
+}
+
+static void b46()
+{
+    Console.WriteLine("Input text: ");
+    string text = Console.ReadLine();
+
+    string result = string.Empty;
+
+    if (text.StartsWith("F")) result = "Fizz";
+    if (text.EndsWith("B")) result += "Buzz";
+
+    if (string.IsNullOrEmpty(result)) result = text;
+
+    Console.WriteLine(result);
+}
+
+static void b47()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n1 + n2 == n3) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b48()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    bool match = false;
+    if (n2 > n1 && n3 > n2) match = true;
+
+    Console.WriteLine(match);
+}
+
+static void b49()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Allow equals (yes/no): ");
+    bool eq = Console.ReadLine().ToLower().Equals("yes");
+    
+    bool match = false;
+    if (eq)
+    {
+        if (n1 <= n2 && n2 <= n3) match = true;
+    }
+    else
+    {
+        if (n1 < n2 && n2 < n3) match = true;
+    }
+
+    Console.WriteLine(match);
+}
+
+static void b50()
+{
+    Console.WriteLine("Input list (separated by comma): ");
+    string text = Console.ReadLine();
+
+    List<int> list = new();
+    list.AddRange(text.Split(',').Select(x => int.Parse(x)));
+
+    bool match = false;
+    int lastDigit = list[0] % 10;
+    list.ForEach(x => match = x % 10 == lastDigit);
+
+    Console.WriteLine(match);
+}
+
+static void b51()
+{
+    //words are hard...
+}
+
+static void b52()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int result;
+    if (n1 == n2) result = 0;
+    else
+    {
+        List<int> numbers = new() { n1, n2 };
+        numbers.Sort();
+
+        if (numbers[0] % 7 == numbers[1] % 7) result = numbers.First();
+        else result = numbers.Last();
+    }
+
+    Console.WriteLine(result);
+}
+
+static void b53()
+{
+    Console.WriteLine("Input first number: ");
+    string n1 = Console.ReadLine();
+
+    Console.WriteLine("Input seccond number: ");
+    string n2 = Console.ReadLine();
+
+    bool match = n1.ToArray().Intersect(n2.ToArray()).Any();
+
+    Console.WriteLine(match);
+}
+
+static void b54()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int sum = n1 + n2;
+
+    if (sum.ToString().Length > n1.ToString().Length) sum = n1;
+
+    Console.WriteLine(sum);
+}
+
+static void b55()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    int sum;
+    if (n1 == n2) sum = n3;
+    else sum = n1 + n2 + n3;
+
+    Console.WriteLine(sum);
+}
+
+static void b56()
+{
+    //retard
+}
+
+static void b57()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int n3 = int.Parse(Console.ReadLine());
+
+    if (n1 >= 10 && n1 <= 20 && n1 != 13 && n1 != 17) n1 = 0;    
+    if (n2 >= 10 && n2 <= 20 && n2 != 13 && n2 != 17) n2 = 0;
+    if (n3 >= 10 && n3 <= 20 && n3 != 13 && n3 != 17) n3 = 0;
+
+    int sum = n1 + n2 + n3;
+
+    Console.WriteLine(sum);
+}
+
+static void b58()
+{
+    Console.WriteLine("Input first number: ");
+    int n1 = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int n2 = int.Parse(Console.ReadLine());
+
+    int result;
+    if (n1 > 13 && n2 > 13) result = 0;
+    else
+    {
+        int n1Diff = Math.Abs(13 - n1);
+        int n2Diff = Math.Abs(13 - n2);
+
+        if (n1Diff < n2Diff) result = n1;
+        else result = n2;
+    }
+
+    Console.WriteLine(result);
+}
+
+static void b59()
+{
+    Console.WriteLine("Input first number: ");
+    int small = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input seccond number: ");
+    int medium = int.Parse(Console.ReadLine());
+
+    Console.WriteLine("Input third number: ");
+    int large = int.Parse(Console.ReadLine());
+
+    int smallDiff = Math.Abs(small - medium);
+    int largeDiff = Math.Abs(medium - large);
+
+    Console.WriteLine(smallDiff == largeDiff);
+}
+
+while (true)
+{
+    b59();
     Console.ReadKey();
 }
