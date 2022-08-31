@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slask", "slask\slask.csproj", "{05896021-EACD-46EC-86A3-43222E7A7868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "slask", "slask\slask.csproj", "{05896021-EACD-46EC-86A3-43222E7A7868}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excercises", "Excercises\Excercises.csproj", "{827F8EBE-9D16-4BB8-8C43-8530A569B209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excercises", "Excercises\Excercises.csproj", "{827F8EBE-9D16-4BB8-8C43-8530A569B209}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v35Ons", "v35Ons\v35Ons.csproj", "{156046FE-05F9-480F-8CD3-9733C3D491A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{827F8EBE-9D16-4BB8-8C43-8530A569B209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{827F8EBE-9D16-4BB8-8C43-8530A569B209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{827F8EBE-9D16-4BB8-8C43-8530A569B209}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156046FE-05F9-480F-8CD3-9733C3D491A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156046FE-05F9-480F-8CD3-9733C3D491A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156046FE-05F9-480F-8CD3-9733C3D491A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156046FE-05F9-480F-8CD3-9733C3D491A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

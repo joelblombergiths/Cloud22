@@ -2049,6 +2049,24 @@ static void b59()
     Console.WriteLine(smallDiff == largeDiff);
 }
 
+static void b60()
+{
+    Console.WriteLine("Input first text: ");
+    string s1 = Console.ReadLine();
+
+    Console.WriteLine("Input second text: ");
+    string s2 = Console.ReadLine();
+
+    string newString = $"{s1}{s2}{s2}{s1}";
+
+    Console.WriteLine(newString);
+}
+
+static void b61()
+{
+
+}
+
 while (true)
 {
     b59();
