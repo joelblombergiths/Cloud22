@@ -41,7 +41,7 @@ void uppg4()
     int number = int.Parse(Console.ReadLine());
 
     Console.WriteLine($"Double: {number * 2}");
-    Console.WriteLine($"Half: {number / 2}");
+    Console.WriteLine($"Half: {number / 2f}");
 }
 
-uppg3();
+uppg4();
