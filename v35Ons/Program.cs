@@ -511,7 +511,7 @@ void uppg22()
 
 void uppg23()
 {
-    string[] possibleChars = { "-", "#", "o", "w", "~" };
+    string[] writeableChars = { "-", "#", "o", "w", "~" };
     int[,] a = new[,] { { 1, 0, 0, 0, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0, 0, 0, 0 }, { 0, 0, 0, 1, 0, 0, 0, 0 } };
     int[,] b = new[,] { { 1, 0, 0, 0, 1, 0, 0, 0 }, { 0, 1, 0, 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 0, 0, 0, 1 } };
     int[,] c = new[,] { { 1, 1, 0, 0, 0, 0, 0, 0 }, { 0, 0, 1, 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 0, 0 }, { 0, 0, 0, 0, 0, 0, 1, 1 } };
@@ -548,7 +548,7 @@ void uppg23()
     {
         for (int y = 0; y < map.GetLength(1); y++)
         {
-            Console.Write(possibleChars[map[x, y]]);
+            Console.Write(writeableChars[map[x, y]]);
         }
         Console.WriteLine();
     }
@@ -598,11 +598,11 @@ void loop33()
     Console.Clear();
     Console.WriteLine("Pascal's Triangle");
 
-    int width = string.Join(" ", pascal[pascal.Length - 1]).Length;
+    int maxWidth = string.Join(" ", pascal[^1]).Length;
 
     for (int i = 0; i < depth; i++)
     {
-        int spaces = (width / 2) - (string.Join(" ", pascal[i]).Length / 2);
+        int spaces = (maxWidth / 2) - (string.Join(" ", pascal[i]).Length / 2);
 
         for (int j = 0; j < spaces; j++)
         {
