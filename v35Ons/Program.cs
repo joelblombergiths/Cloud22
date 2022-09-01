@@ -239,7 +239,7 @@ void uppg15_2()
 
     do
     {
-        int currentGuess = (lowGuess + highGuess) / 2;
+        int currentGuess = (int)Math.Ceiling((lowGuess + highGuess) / 2M);
 
         Console.Write($"Enter a number between 1 and {MAX}: ");
         Thread.Sleep(200);
@@ -620,7 +620,7 @@ void loop33()
 
 while (true)
 {
-    loop33();
+    uppg15_2();
     Console.ReadKey();
     Console.Clear();
 }
