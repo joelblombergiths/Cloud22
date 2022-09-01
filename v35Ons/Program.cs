@@ -1,4 +1,8 @@
-﻿using System.Xml.Linq;
+﻿#pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8321 // Local function is declared but never used
+
 
 void uppg1()
 {
@@ -12,6 +16,7 @@ void uppg1()
 
     Console.WriteLine($"{firstNumber} * {secondNumber} = {sum}");
 }
+
 
 void uppg2()
 {
@@ -201,7 +206,7 @@ void uppg15()
 
         do
         {
-            Console.WriteLine("Enter a number between 1 and 100: ");
+            Console.WriteLine($"Enter a number between 1 and {MAX}: ");
             isValidGuess = int.TryParse(Console.ReadLine(), out currentGuess);
             if (!isValidGuess) Console.WriteLine("Not a valid guess!");
         } while (!isValidGuess);
@@ -213,7 +218,7 @@ void uppg15()
             Console.WriteLine("That is Correct!!");
             isGameOver = true;
         }
-        else if(currentGuess > secret) Console.WriteLine("That's a little too high");
+        else if (currentGuess > secret) Console.WriteLine("That's a little too high");
         else Console.WriteLine("That's a little too low");
 
     } while (!isGameOver);
@@ -228,7 +233,7 @@ void uppg15_2()
 
     int numGuesses = 0;
     bool isGameOver = false;
-        
+
     int lowGuess = 0;
     int highGuess = MAX;
 
@@ -236,8 +241,8 @@ void uppg15_2()
     {
         int currentGuess = (lowGuess + highGuess) / 2;
 
-        Console.Write("Enter a number between 1 and 100: ");
-        Thread.Sleep(100);
+        Console.Write($"Enter a number between 1 and {MAX}: ");
+        Thread.Sleep(200);
         Console.WriteLine(currentGuess);
 
         numGuesses++;
@@ -252,7 +257,7 @@ void uppg15_2()
             Console.WriteLine("That's a little too high");
             highGuess = currentGuess;
         }
-        else 
+        else
         {
             Console.WriteLine("That's a little too low");
             lowGuess = currentGuess;
@@ -308,21 +313,238 @@ void uppg18()
     ulong b = 1;
     ulong fib;
 
-    Console.WriteLine(a);
-    Console.WriteLine(b);
+    Console.WriteLine($"1: {a}");
+    Console.WriteLine($"2: {b}");
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 3; i <= 100; i++)
     {
         fib = a + b;
         a = b;
         b = fib;
-        Console.WriteLine(fib);
+        Console.WriteLine($"{i}: {fib}");
     }
 }
 
+void uppg19()
+{
+    List<int> numbers = new();
+    bool isNumber;
+    int inputNumber;
+
+    do
+    {
+        Console.WriteLine($"Enter a number: ");
+        isNumber = int.TryParse(Console.ReadLine(), out inputNumber);
+        if (isNumber)
+        {
+            numbers.Add(inputNumber);
+            Console.WriteLine($"Current sum is: {numbers.Sum()}");
+        }
+    } while (isNumber);
+
+    Console.WriteLine($"Average of the {numbers.Count} numbers entered is {numbers.Average()}");
+}
+
+void uppg20()
+{
+    decimal firstNumber = RequestNumber();
+    char operatorChar = RequestOperator();
+    decimal secondNumber = RequestNumber();
+
+    decimal sum = operatorChar switch
+    {
+        '+' => firstNumber + secondNumber,
+        '-' => firstNumber - secondNumber,
+        '/' => firstNumber / secondNumber,
+        '*' => firstNumber * secondNumber,
+        _ => 0
+    };
+
+    Console.WriteLine($"{firstNumber} {operatorChar} {secondNumber} = {sum}");
+
+    decimal RequestNumber()
+    {
+        decimal inputNumber;
+        bool isValidInput;
+        do
+        {
+            Console.WriteLine($"Enter a number: ");
+            isValidInput = decimal.TryParse(Console.ReadLine(), out inputNumber);
+            if (!isValidInput) Console.WriteLine("Invalid Input");
+        } while (!isValidInput);
+
+        return inputNumber;
+    }
+
+    char RequestOperator()
+    {
+        char[] operators = { '+', '-', '/', '*' };
+
+        char op;
+        bool isValidInput;
+        do
+        {
+            Console.WriteLine("Enter operator: ");
+            op = Console.ReadKey().KeyChar;
+            Console.WriteLine();
+
+            isValidInput = operators.Contains(op);
+            if (!isValidInput) Console.WriteLine($"valid operators are {string.Join(",", operators)}");
+        } while (!isValidInput);
+
+        return op;
+    }
+}
+
+void uppg21()
+{
+    int number = 1;
+    for (int i = 0; i < 16; i++)
+    {
+        number *= 2;
+        Console.WriteLine(number);
+    }
+}
+
+void uppg22()
+{
+    const int ROCK = 0;
+    const int PAPER = 1;
+    const int SCISSORS = 2;
+    const int LIZARD = 3;
+    const int SPOCK = 4;
+    string[] choices = { "Rock", "Paper", "Scissors", "Lizard", "Spock" };
+
+    bool isGameOver = false;
+    int playerScore = 0;
+    int computerScore = 0;
+
+
+    do
+    {
+        if (!RequestPlayerChoice(out string playerChoice)) isGameOver = true;
+
+        if (!isGameOver)
+        {
+            Console.WriteLine($"Player chose {playerChoice}");
+
+            string computerChoice = choices.GetValue(Random.Shared.Next(0, choices.Length)).ToString();
+            Console.WriteLine($"Computer chose {computerChoice}");
+
+            if (playerChoice == computerChoice) Console.WriteLine("It's a Tie!");
+            else
+            {
+                if (CheckResult(playerChoice, computerChoice))
+                {
+                    Console.WriteLine("Player won this round");
+                    playerScore++;
+                }
+                else
+                {
+                    Console.WriteLine("Computer won this round");
+                    computerScore++;
+                }
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Press the Any key to start the next round");
+            Console.ReadKey();
+            Console.Clear();
+        }
+        else
+        {
+            Console.Clear();
+            Console.WriteLine("Game Over");
+            Console.WriteLine($"Player got {playerScore} points");
+            Console.WriteLine($"Computer got {computerScore} points");
+        }
+    } while (!isGameOver);
+
+    bool RequestPlayerChoice(out string choice)
+    {
+        choice = string.Empty;
+        bool isValidInput;
+
+        do
+        {
+            Console.WriteLine($"Enter {string.Join(" or ", choices)}: ");
+            string input = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(input)) return false;
+            else
+            {
+                choice = choices.FirstOrDefault(x => x.StartsWith(input, StringComparison.OrdinalIgnoreCase), string.Empty);
+
+                isValidInput = !string.IsNullOrEmpty(choice);
+            }
+
+            if (!isValidInput) Console.WriteLine($"valid choices are {string.Join(",", choices)}");
+        } while (!isValidInput);
+
+        Console.Clear();
+        return true;
+    }
+
+    bool CheckResult(string player, string computer)
+    {
+        List<string> selectedChoices = new() { player, computer };
+
+        if (selectedChoices.Contains(choices[SCISSORS]) && selectedChoices.Contains(choices[PAPER]))
+        {
+            Console.WriteLine("Scissors cuts Paper");
+            return player == choices[SCISSORS];
+        }
+        else if (selectedChoices.Contains(choices[PAPER]) && selectedChoices.Contains(choices[ROCK]))
+        {
+            Console.WriteLine("Paper covers Rock");
+            return player == choices[PAPER];
+        }
+        else if (selectedChoices.Contains(choices[ROCK]) && selectedChoices.Contains(choices[LIZARD]))
+        {
+            Console.WriteLine("Rock crushes Lizard");
+            return player == choices[ROCK];
+        }
+        else if (selectedChoices.Contains(choices[LIZARD]) && selectedChoices.Contains(choices[SPOCK]))
+        {
+            Console.WriteLine("Lizard poisons Spock");
+            return player == choices[LIZARD];
+        }
+        else if (selectedChoices.Contains(choices[SPOCK]) && selectedChoices.Contains(choices[SCISSORS]))
+        {
+            Console.WriteLine("Spock smashes Scissors");
+            return player == choices[SPOCK];
+        }
+        else if (selectedChoices.Contains(choices[SCISSORS]) && selectedChoices.Contains(choices[LIZARD]))
+        {
+            Console.WriteLine("Scissors decapitates Lizard");
+            return player == choices[SCISSORS];
+        }
+        else if (selectedChoices.Contains(choices[LIZARD]) && selectedChoices.Contains(choices[PAPER]))
+        {
+            Console.WriteLine("Lizard eats Paper");
+            return player == choices[LIZARD];
+        }
+        else if (selectedChoices.Contains(choices[PAPER]) && selectedChoices.Contains(choices[SPOCK]))
+        {
+            Console.WriteLine("Paper disproves Spock");
+            return player == choices[PAPER];
+        }
+        else if (selectedChoices.Contains(choices[SPOCK]) && selectedChoices.Contains(choices[ROCK]))
+        {
+            Console.WriteLine("Spock vaporizes Rock");
+            return player == choices[SPOCK];
+        }
+        else// if (selectedChoices.Contains(choices[ROCK]) && selectedChoices.Contains(choices[SCISSORS]))
+        {
+            Console.WriteLine("Rock crushes Scissors");
+            return player == choices[ROCK];
+        }        
+    }
+}
 
 while (true)
 {
-    uppg18();
+    uppg22();
     Console.ReadKey();
+    Console.Clear();
 }
