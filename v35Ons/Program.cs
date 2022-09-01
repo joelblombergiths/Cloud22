@@ -419,7 +419,6 @@ void uppg22()
     int playerScore = 0;
     int computerScore = 0;
 
-
     do
     {
         if (!RequestPlayerChoice(out string playerChoice)) isGameOver = true;
@@ -489,56 +488,24 @@ void uppg22()
     {
         List<string> selectedChoices = new() { player, computer };
 
-        if (selectedChoices.Contains(choices[SCISSORS]) && selectedChoices.Contains(choices[PAPER]))
+        List<(string WinningChoice, string LoosingChoice, string Reason)> combinations = new()
         {
-            Console.WriteLine("Scissors cuts Paper");
-            return player == choices[SCISSORS];
-        }
-        else if (selectedChoices.Contains(choices[PAPER]) && selectedChoices.Contains(choices[ROCK]))
-        {
-            Console.WriteLine("Paper covers Rock");
-            return player == choices[PAPER];
-        }
-        else if (selectedChoices.Contains(choices[ROCK]) && selectedChoices.Contains(choices[LIZARD]))
-        {
-            Console.WriteLine("Rock crushes Lizard");
-            return player == choices[ROCK];
-        }
-        else if (selectedChoices.Contains(choices[LIZARD]) && selectedChoices.Contains(choices[SPOCK]))
-        {
-            Console.WriteLine("Lizard poisons Spock");
-            return player == choices[LIZARD];
-        }
-        else if (selectedChoices.Contains(choices[SPOCK]) && selectedChoices.Contains(choices[SCISSORS]))
-        {
-            Console.WriteLine("Spock smashes Scissors");
-            return player == choices[SPOCK];
-        }
-        else if (selectedChoices.Contains(choices[SCISSORS]) && selectedChoices.Contains(choices[LIZARD]))
-        {
-            Console.WriteLine("Scissors decapitates Lizard");
-            return player == choices[SCISSORS];
-        }
-        else if (selectedChoices.Contains(choices[LIZARD]) && selectedChoices.Contains(choices[PAPER]))
-        {
-            Console.WriteLine("Lizard eats Paper");
-            return player == choices[LIZARD];
-        }
-        else if (selectedChoices.Contains(choices[PAPER]) && selectedChoices.Contains(choices[SPOCK]))
-        {
-            Console.WriteLine("Paper disproves Spock");
-            return player == choices[PAPER];
-        }
-        else if (selectedChoices.Contains(choices[SPOCK]) && selectedChoices.Contains(choices[ROCK]))
-        {
-            Console.WriteLine("Spock vaporizes Rock");
-            return player == choices[SPOCK];
-        }
-        else// if (selectedChoices.Contains(choices[ROCK]) && selectedChoices.Contains(choices[SCISSORS]))
-        {
-            Console.WriteLine("Rock crushes Scissors");
-            return player == choices[ROCK];
-        }        
+            (choices[SCISSORS], choices[PAPER], "Scissors cuts Paper"),
+            (choices[PAPER], choices[ROCK], "Paper covers Rock"),
+            (choices[ROCK], choices[LIZARD], "Rock crushes Lizard"),
+            (choices[LIZARD], choices[SPOCK], "Lizard poisons Spock"),
+            (choices[SPOCK], choices[SCISSORS], "Spock smashes Scissors"),
+            (choices[SCISSORS], choices[LIZARD], "Scissors decapitates Lizard"),
+            (choices[LIZARD], choices[PAPER], "Lizard eats Paper"),
+            (choices[PAPER], choices[SPOCK], "Paper disproves Spock"),
+            (choices[SPOCK], choices[ROCK], "Spock vaporizes Rock"),
+            (choices[ROCK], choices[SCISSORS], "Rock crushes Scissors")
+        };
+
+        var (WinningChoice, LoosingChoice, Reason) = combinations.Find(x => selectedChoices.Contains(x.WinningChoice) && selectedChoices.Contains(x.LoosingChoice));
+        Console.WriteLine(Reason);
+
+        return player == WinningChoice;
     }
 }
 
