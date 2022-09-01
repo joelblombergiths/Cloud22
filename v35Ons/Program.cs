@@ -502,16 +502,61 @@ void uppg22()
             (choices[ROCK], choices[SCISSORS], "Rock crushes Scissors")
         };
 
-        var (WinningChoice, LoosingChoice, Reason) = combinations.Find(x => selectedChoices.Contains(x.WinningChoice) && selectedChoices.Contains(x.LoosingChoice));
+        (string WinningChoice, string LoosingChoice, string Reason) = combinations.Find(x => selectedChoices.Contains(x.WinningChoice) && selectedChoices.Contains(x.LoosingChoice));
         Console.WriteLine(Reason);
 
         return player == WinningChoice;
     }
 }
 
+void uppg23()
+{
+    string[] possibleChars = { "-", "#", "o", "w", "~" };
+    int[,] a = new[,] { { 1, 0, 0, 0, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0, 0, 0, 0 }, { 0, 0, 0, 1, 0, 0, 0, 0 } };
+    int[,] b = new[,] { { 1, 0, 0, 0, 1, 0, 0, 0 }, { 0, 1, 0, 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0, 0, 1, 0 }, { 0, 0, 0, 1, 0, 0, 0, 1 } };
+    int[,] c = new[,] { { 1, 1, 0, 0, 0, 0, 0, 0 }, { 0, 0, 1, 1, 0, 0, 0, 0 }, { 0, 0, 0, 0, 1, 1, 0, 0 }, { 0, 0, 0, 0, 0, 0, 1, 1 } };
+    int[,] d = new[,] { { 0, 0, 1, 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0, 1, 0, 0 }, { 1, 1, 1, 1, 1, 1, 1, 1 }, { 0, 0, 1, 0, 0, 1, 0, 0 } };
+    int[,] e = new[,] { { 1, 0, 0, 0, 1, 0, 0, 0 }, { 0, 1, 0, 1, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0, 0, 0, 0 }, { 0, 1, 0, 1, 0, 0, 0, 0 } };
+    int[,] f = new[,] { { 1, 0, 1, 0 }, { 0, 1, 0, 1 }, { 1, 0, 1, 0 }, { 0, 1, 0, 1 } };
+    int[,] g = new[,] { { 1, 1, 1, 0, 0, 0 }, { 1, 1, 1, 0, 0, 0 }, { 1, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
+    int[,] h = new[,] { { 0, 0, 1, 0, 0, 1, 1 }, { 0, 0, 0, 1, 0, 1, 1 }, { 0, 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 0, 1 } };
+    int[,] i = new[,] { { 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0 } };
+    int[,] j = new[,] { { 1, 0, 0, 0, 1 }, { 0, 1, 0, 1, 0 }, { 0, 0, 2, 0, 0 }, { 0, 1, 0, 1, 0 }, { 1, 0, 0, 0, 1 } };    
+    int[,] k = new[,] { { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 }, { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 }, { 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }, { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
+
+    Console.WriteLine("Chose pattern (a - k): ");
+    char selected = Console.ReadKey().KeyChar;
+    Console.WriteLine();
+
+    int[,] map = selected switch
+    {
+        'a' => a,
+        'b' => b,
+        'c' => c,
+        'd' => d,
+        'e' => e,
+        'f' => f,
+        'g' => g,
+        'h' => h,
+        'i' => i,
+        'j' => j,
+        'k' => k,
+        _ => a
+    };
+
+    for (int x = 0; x < map.GetLength(0); x++)
+    {
+        for (int y = 0; y < map.GetLength(1); y++)
+        {
+            Console.Write(possibleChars[map[x, y]]);
+        }
+        Console.WriteLine();
+    }
+}
+
 while (true)
 {
-    uppg22();
+    uppg23();
     Console.ReadKey();
     Console.Clear();
 }
