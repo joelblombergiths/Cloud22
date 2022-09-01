@@ -1,4 +1,6 @@
-﻿void uppg1()
+﻿using System.Xml.Linq;
+
+void uppg1()
 {
     Console.WriteLine("Input first number: ");
     int firstNumber = int.Parse(Console.ReadLine());
@@ -147,9 +149,11 @@ void uppg12()
     {
         for (int j = 0; j < width; j++)
         {
-            if (i == 0 || i == height - 1) Console.Write("X");
-            else if (j == 0 || j == width - 1) Console.Write("X");            
-            else Console.Write(" ");
+            //if (i == 0 || i == height - 1) Console.Write("X");
+            //else if (j == 0 || j == width - 1) Console.Write("X");            
+            //else Console.Write(" ");
+
+            Console.Write((i == 0 || i == height - 1) || (j == 0 || j == width - 1) ? "X" : " ");
         }
         Console.WriteLine();
     }
@@ -179,13 +183,14 @@ void uppg14()
             }
             Console.WriteLine();
         }
-        Console.WriteLine(" ");
+        Console.WriteLine();
     }
 }
 
 void uppg15()
 {
-    int secret = Random.Shared.Next(1, 100);
+    const int MAX = 100;
+    int secret = Random.Shared.Next(1, MAX + 1);
     int numGuesses = 0;
     bool isGameOver = false;
 
@@ -216,9 +221,108 @@ void uppg15()
     Console.WriteLine($"You found the number on {numGuesses} tries, good job!");
 }
 
+void uppg15_2()
+{
+    const int MAX = 100;
+    int secret = Random.Shared.Next(1, MAX + 1);
+
+    int numGuesses = 0;
+    bool isGameOver = false;
+        
+    int lowGuess = 0;
+    int highGuess = MAX;
+
+    do
+    {
+        int currentGuess = (lowGuess + highGuess) / 2;
+
+        Console.Write("Enter a number between 1 and 100: ");
+        Thread.Sleep(100);
+        Console.WriteLine(currentGuess);
+
+        numGuesses++;
+
+        if (currentGuess == secret)
+        {
+            Console.WriteLine("That is Correct!!");
+            isGameOver = true;
+        }
+        else if (currentGuess > secret)
+        {
+            Console.WriteLine("That's a little too high");
+            highGuess = currentGuess;
+        }
+        else 
+        {
+            Console.WriteLine("That's a little too low");
+            lowGuess = currentGuess;
+        }
+
+        Thread.Sleep(100);
+    } while (!isGameOver);
+
+    Console.WriteLine($"You found the number on {numGuesses} tries, good job!");
+}
+
+void uppg16()
+{
+    int sum = 0;
+    for (int i = 1; i <= 100; i++)
+    {
+        sum += i;
+    }
+
+    Console.WriteLine(sum);
+}
+
+void uppg17()
+{
+    List<int> primeNumbers = new();
+
+    int counter = 2;
+    bool match;
+
+    do
+    {
+        match = true;
+        for (int i = 2; i < counter; i++)
+        {
+            if (counter % i == 0)
+            {
+                match = false;
+                break;
+            }
+        }
+        if (match) primeNumbers.Add(counter);
+
+        counter++;
+    }
+    while (primeNumbers.Count < 20);
+
+    Console.WriteLine(string.Join("\n", primeNumbers));
+}
+
+void uppg18()
+{
+    ulong a = 0;
+    ulong b = 1;
+    ulong fib;
+
+    Console.WriteLine(a);
+    Console.WriteLine(b);
+
+    for (int i = 0; i < 100; i++)
+    {
+        fib = a + b;
+        a = b;
+        b = fib;
+        Console.WriteLine(fib);
+    }
+}
+
 
 while (true)
 {
-    uppg12();
+    uppg18();
     Console.ReadKey();
 }
