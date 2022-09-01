@@ -40,8 +40,8 @@ void uppg4()
     Console.WriteLine("Input number: ");
     int number = int.Parse(Console.ReadLine());
 
-    Console.WriteLine($"Double: {number * 2}");
-    Console.WriteLine($"Half: {number / 2f}");
+    Console.WriteLine($"Double of {number} is {number * 2}");
+    Console.WriteLine($"Halfof {number} is {number / 2f}");
 }
 
 
@@ -72,7 +72,7 @@ void uppg7()
 
 void uppg8()
 {
-    Console.WriteLine("Input number: ");
+    Console.WriteLine("Show multiplication table for: ");
     int number = int.Parse(Console.ReadLine());
 
     for (int i = 1; i <= 10; i++)
@@ -148,7 +148,8 @@ void uppg12()
         for (int j = 0; j < width; j++)
         {
             if (i == 0 || i == height - 1) Console.Write("X");
-            else Console.Write(j == 0 || j == width - 1 ? "X" : " ");            
+            else if (j == 0 || j == width - 1) Console.Write("X");            
+            else Console.Write(" ");
         }
         Console.WriteLine();
     }
@@ -214,4 +215,10 @@ void uppg15()
 
     Console.WriteLine($"You found the number on {numGuesses} tries, good job!");
 }
-uppg15();
+
+
+while (true)
+{
+    uppg12();
+    Console.ReadKey();
+}
