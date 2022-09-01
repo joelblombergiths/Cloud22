@@ -521,7 +521,7 @@ void uppg23()
     int[,] g = new[,] { { 1, 1, 1, 0, 0, 0 }, { 1, 1, 1, 0, 0, 0 }, { 1, 1, 1, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0 } };
     int[,] h = new[,] { { 0, 0, 1, 0, 0, 1, 1 }, { 0, 0, 0, 1, 0, 1, 1 }, { 0, 0, 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0, 0, 1 } };
     int[,] i = new[,] { { 0, 0, 1, 0, 0 }, { 0, 0, 0, 0, 0 }, { 0, 0, 1, 0, 0 }, { 0, 0, 1, 0, 0 } };
-    int[,] j = new[,] { { 1, 0, 0, 0, 1 }, { 0, 1, 0, 1, 0 }, { 0, 0, 2, 0, 0 }, { 0, 1, 0, 1, 0 }, { 1, 0, 0, 0, 1 } };    
+    int[,] j = new[,] { { 1, 0, 0, 0, 1 }, { 0, 1, 0, 1, 0 }, { 0, 0, 2, 0, 0 }, { 0, 1, 0, 1, 0 }, { 1, 0, 0, 0, 1 } };
     int[,] k = new[,] { { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 }, { 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0 }, { 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }, { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 } };
 
     Console.WriteLine("Chose pattern (a - k): ");
@@ -554,9 +554,73 @@ void uppg23()
     }
 }
 
+void loop31()
+{
+    Console.WriteLine($"Enter width of diamond: ");
+    int width = int.Parse(Console.ReadLine());
+
+    for (int i = 1; i <= width * 2; i += 2)
+    {
+        int spaces = Math.Abs((width - i) / 2);
+        int stars = width - Math.Abs(width - i);
+
+        for (int j = 0; j < spaces; j++)
+        {
+            Console.Write(" ");
+        }
+
+        for (int j = 0; j < stars; j++)
+        {
+            Console.Write("*");
+        }
+
+        Console.WriteLine();
+    }
+}
+
+void loop33()
+{
+    Console.WriteLine($"Enter depth of Pascal's triangle: ");
+    int depth = int.Parse(Console.ReadLine());
+
+    int[][] pascal = new int[depth][];
+
+    for (int n = 0; n < depth; n++)
+    {
+        pascal[n] = new int[n + 1];
+        for (int k = 0; k < n + 1; k++)
+        {
+            if (k == 0 || k == n) pascal[n][k] = 1;
+            else pascal[n][k] = pascal[n - 1][k - 1] + pascal[n - 1][k];
+        }
+    }
+
+    Console.Clear();
+    Console.WriteLine("Pascal's Triangle");
+
+    int width = string.Join(" ", pascal[pascal.Length - 1]).Length;
+
+    for (int i = 0; i < depth; i++)
+    {
+        int spaces = (width / 2) - (string.Join(" ", pascal[i]).Length / 2);
+
+        for (int j = 0; j < spaces; j++)
+        {
+            Console.Write(" ");
+        }
+
+        for (int j = 0; j < pascal[i].Length; j++)
+        {
+            Console.Write($"{pascal[i][j]} ");
+        }
+
+        Console.WriteLine();
+    }
+}
+
 while (true)
 {
-    uppg23();
+    loop33();
     Console.ReadKey();
     Console.Clear();
 }
