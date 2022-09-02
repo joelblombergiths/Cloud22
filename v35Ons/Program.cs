@@ -4,6 +4,8 @@
 #pragma warning disable CS8321 // Local function is declared but never used
 
 
+using System.Numerics;
+
 void uppg1()
 {
     Console.WriteLine("Input first number: ");
@@ -309,13 +311,13 @@ void uppg17()
 
 void uppg18()
 {
-    ulong a = 0;
-    ulong b = 1;
-    ulong fib;
+    BigInteger a = 0;
+    BigInteger b = 1;
+    BigInteger fib;
 
     Console.WriteLine($"1: {a}");
     Console.WriteLine($"2: {b}");
-
+    
     for (int i = 3; i <= 100; i++)
     {
         fib = a + b;
@@ -620,7 +622,7 @@ void loop33()
 
 while (true)
 {
-    uppg15_2();
+    uppg18();
     Console.ReadKey();
     Console.Clear();
 }
