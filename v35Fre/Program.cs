@@ -267,43 +267,7 @@ void uppg36()
 
 void uppg37()
 {
-    const int HEIGHT = 10;
-    const int WIDTH = 15;
-    int[] playerPos = new int[2] { (int)Math.Ceiling(WIDTH / 2M), (int)Math.Ceiling(HEIGHT / 2M), };
-    Console.CursorVisible = false;
-
-    do
-    {
-        Console.Clear();
-        for (int i = 0; i < HEIGHT; i++)
-        {
-            for (int j = 0; j < WIDTH; j++)
-            {
-                Console.Write((i == 0 || i == HEIGHT - 1) || (j == 0 || j == WIDTH - 1) ? "X" : " ");
-            }
-            Console.WriteLine();
-        }
-
-        Console.SetCursorPosition(playerPos[0], playerPos[1]);
-        Console.Write("O");
-
-        (int x, int y) = Console.ReadKey().Key switch
-        {
-            ConsoleKey.LeftArrow => (-1, 0),
-            ConsoleKey.RightArrow => (1, 0),
-            ConsoleKey.UpArrow => (0, -1),
-            ConsoleKey.DownArrow => (0, 1),
-            _ => (0, 0)
-        };
-
-        int newX = playerPos[0] + x;
-        int newY = playerPos[1] + y;
-        if (newX < WIDTH - 1 && newX > 0 && newY < HEIGHT - 1 && newY > 0)
-        {
-            playerPos[0] = newX;
-            playerPos[1] = newY;
-        }
-    } while (true);
+    //See separate project
 }
 
 
