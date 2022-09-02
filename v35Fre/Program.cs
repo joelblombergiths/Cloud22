@@ -11,7 +11,7 @@ void uppg1()
     for (int i = 0; i < array.Length; i++)
     {
         Console.WriteLine(array[i]);
-    }    
+    }
 }
 void uppg2()
 {
@@ -91,10 +91,10 @@ void uppg29()
 
     for (int i = 0; i < text.Length; i++)
     {
-        if (text[i] == specialChar) Console.ForegroundColor = ConsoleColor.Red;            
+        if (text[i] == specialChar) Console.ForegroundColor = ConsoleColor.Red;
         else Console.ForegroundColor = ConsoleColor.Gray;
         Console.Write(text[i]);
-    }    
+    }
 }
 
 void uppg30()
@@ -110,7 +110,7 @@ void uppg30()
 
     for (int i = 0; i < text.Length; i++)
     {
-        if(i >= start && i <= stop) Console.ForegroundColor = ConsoleColor.Red;
+        if (i >= start && i <= stop) Console.ForegroundColor = ConsoleColor.Red;
         else Console.ForegroundColor = ConsoleColor.White;
         Console.Write(text[i]);
     }
@@ -151,11 +151,11 @@ void uppg31()
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(text[i]);                    
+                Console.Write(text[i]);
             }
             doColor = !doColor;
         }
-        else Console.Write(text[i]);        
+        else Console.Write(text[i]);
     }
 
     Console.ForegroundColor = ConsoleColor.Gray;
@@ -182,7 +182,7 @@ void uppg33()
     string input = Console.ReadLine();
 
     string[] numberText = { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
-    
+
     for (int i = 0; i < input.Length; i++)
     {
         int numIndex = int.Parse(input[i].ToString());
@@ -217,7 +217,7 @@ void uppg35()
         Console.WriteLine("Write word: ");
         prevWords.Add(Console.ReadLine());
 
-        if(prevWords.Count < 10)
+        if (prevWords.Count < 10)
         {
             Console.WriteLine("I don't have 10 words yet");
         }
@@ -252,7 +252,7 @@ void uppg36()
         {
             if (i == lastUpdated) Console.ForegroundColor = ConsoleColor.Red;
             else Console.ForegroundColor = ConsoleColor.Gray;
-            
+
             Console.SetCursorPosition(LEFT, TOP + i);
             Console.Write(counters[i]);
         }
@@ -265,10 +265,50 @@ void uppg36()
     } while (true);
 }
 
+void uppg37()
+{
+    const int HEIGHT = 10;
+    const int WIDTH = 15;
+    int[] playerPos = new int[2] { (int)Math.Ceiling(WIDTH / 2M), (int)Math.Ceiling(HEIGHT / 2M), };
+
+    do
+    {
+        Console.Clear();
+        for (int i = 0; i < HEIGHT; i++)
+        {
+            for (int j = 0; j < WIDTH; j++)
+            {
+                Console.Write((i == 0 || i == HEIGHT - 1) || (j == 0 || j == WIDTH - 1) ? "X" : " ");
+            }
+            Console.WriteLine();
+        }
+
+        Console.SetCursorPosition(playerPos[0], playerPos[1]);
+        Console.Write("O");
+
+        (int x, int y) = Console.ReadKey().Key switch
+        {
+            ConsoleKey.LeftArrow => (-1, 0),
+            ConsoleKey.RightArrow => (1, 0),
+            ConsoleKey.UpArrow => (0, -1),
+            ConsoleKey.DownArrow => (0, 1),
+            _ => (0, 0)
+        };
+
+        int newX = playerPos[0] + x;
+        int newY = playerPos[1] + y;
+        if (newX < WIDTH - 1 && newX > 0 && newY < HEIGHT - 1 && newY > 0)
+        {
+            playerPos[0] = newX;
+            playerPos[1] = newY;
+        }
+    } while (true);
+}
+
 
 while (true)
 {
-    uppg36();
+    uppg37();
     Console.ReadKey();
     Console.Clear();
 }
