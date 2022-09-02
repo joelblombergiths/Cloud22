@@ -161,9 +161,58 @@ void uppg31()
     Console.ForegroundColor = ConsoleColor.Gray;
 }
 
+void uppg32()
+{
+    Console.WriteLine("Enter text:");
+    string text = Console.ReadLine();
+
+    char[] vowels = { 'a', 'o', 'u', 'å', 'e', 'i', 'y', 'ä', 'ö' };
+    int numVowels = 0;
+    for (int i = 0; i < text.Length; i++)
+    {
+        if (vowels.Contains(text[i])) numVowels++;
+    }
+
+    Console.WriteLine($"Text contains {numVowels} vowels");
+}
+
+void uppg33()
+{
+    Console.WriteLine("Enter number:");
+    string input = Console.ReadLine();
+
+    string[] numberText = { "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
+    
+    for (int i = 0; i < input.Length; i++)
+    {
+        int numIndex = int.Parse(input[i].ToString());
+        Console.Write(numberText[numIndex]);
+        if (i < input.Length - 1) Console.Write("-");
+    }
+}
+
+void uppg34()
+{
+    const int NUMWORDS = 7;
+
+    string[] words = new string[NUMWORDS];
+    for (int i = 0; i < NUMWORDS; i++)
+    {
+        Console.Write($"Enter word #{i + 1}: ");
+        words[i] = Console.ReadLine();
+    }
+
+    for (int i = NUMWORDS - 1; i >= 0; i--)
+    {
+        Console.WriteLine(words[i]);
+    }
+}
+
+
+
 while (true)
 {
-    uppg31();
+    uppg34();
     Console.ReadKey();
     Console.Clear();
 }
