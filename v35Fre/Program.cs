@@ -270,6 +270,7 @@ void uppg37()
     const int HEIGHT = 10;
     const int WIDTH = 15;
     int[] playerPos = new int[2] { (int)Math.Ceiling(WIDTH / 2M), (int)Math.Ceiling(HEIGHT / 2M), };
+    Console.CursorVisible = false;
 
     do
     {
