@@ -2,7 +2,7 @@
 #pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning disable CS8604 // Possible null reference argument.
 #pragma warning disable CS8321 // Local function is declared but never used
-
+#pragma warning disable CS8601 // Possible null reference assignment.
 
 void uppg1()
 {
@@ -199,6 +199,7 @@ void uppg34()
     for (int i = 0; i < NUMWORDS; i++)
     {
         Console.Write($"Enter word #{i + 1}: ");
+
         words[i] = Console.ReadLine();
     }
 
@@ -208,11 +209,66 @@ void uppg34()
     }
 }
 
+void uppg35()
+{
+    List<string> prevWords = new();
+    do
+    {
+        Console.WriteLine("Write word: ");
+        prevWords.Add(Console.ReadLine());
+
+        if(prevWords.Count < 10)
+        {
+            Console.WriteLine("I don't have 10 words yet");
+        }
+        else
+        {
+            Console.WriteLine($"10 words ago you said {prevWords[^10]}");
+        }
+    } while (true);
+}
+
+
+/*
+ Console.SetCursorPosition() kan man använda för att flytta textmarkören i konsolen.
+(ex: SetCursorPosition(5, 3) sätter markören 6 tecken in från vänster, och 4 steg från toppen av skärmen). 
+Skriv ett program som skriver siffran 0 i början på de 10 första raderna. 
+Varje sekund som går ska sedan en (Random) av de 10 räknarna öka med 1.
+Den rad/räknare som senast uppdaterades ska skrivas med röd text.
+ */
+
+
+void uppg36()
+{
+    const int TOP = 4;
+    const int LEFT = 6;
+
+    int[] counters = new int[10];
+    int lastUpdated = -1;
+    do
+    {
+        Console.Clear();
+        for (int i = 0; i < counters.Length; i++)
+        {
+            if (i == lastUpdated) Console.ForegroundColor = ConsoleColor.Red;
+            else Console.ForegroundColor = ConsoleColor.Gray;
+            
+            Console.SetCursorPosition(LEFT, TOP + i);
+            Console.Write(counters[i]);
+        }
+
+        Thread.Sleep(1000);
+
+        lastUpdated = Random.Shared.Next(0, counters.Length);
+        counters[lastUpdated] += 1;
+
+    } while (true);
+}
 
 
 while (true)
 {
-    uppg34();
+    uppg36();
     Console.ReadKey();
     Console.Clear();
 }
