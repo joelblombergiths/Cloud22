@@ -1,7 +1,8 @@
 ﻿Console.CursorVisible = false;
+Console.ForegroundColor = ConsoleColor.White;
 
-const int HEIGHT = 15;
-const int WIDTH = 50;
+const int HEIGHT = 30;
+const int WIDTH = 100;
 
 const string PLAYER = "Ö";
 const string TAIL = "O";
@@ -18,6 +19,9 @@ int tailLength;
 int score;
 
 bool isGameOver;
+
+int halfWidth = (int)Math.Floor(WIDTH / 2f);
+int halfHeight = (int)Math.Floor(HEIGHT / 2f);
 
 void NewGame()
 {
@@ -38,9 +42,9 @@ void NewGame()
     }
 
     //Draw player
-    playerPos = new int[2] { (int)Math.Floor(WIDTH / 2M), (int)Math.Floor(HEIGHT / 2M) };    
+    playerPos = new int[2] { halfWidth, halfHeight };        
     Console.SetCursorPosition(playerPos[0], playerPos[1]);
-    Console.Write(PLAYER);
+    Console.Write(PLAYER);    
 
     //Draw apple
     applePos = NewApplePos();
@@ -55,18 +59,25 @@ void NewGame()
 
 int[] NewApplePos()
 {
+    //find empty space for apple
+    int counter = 0;
     do
     {
-        int[] tmp = new int[2] { Random.Shared.Next(2, WIDTH - 1), Random.Shared.Next(2, HEIGHT - 1) };
+        int[] tmp = new int[2] { Random.Shared.Next(1, WIDTH - 1), Random.Shared.Next(1, HEIGHT - 1) };
         if (!playerPos.SequenceEqual(tmp) && !tail.Any(t => t.SequenceEqual(tmp))) return tmp;
-    } while (true);
+        else counter++;
+    } while (counter <= ((HEIGHT - 1) * (WIDTH - 1)));
+    
+    //if gameboard full then GameOver
+    isGameOver = true;
+    return new int[] { 0, 0 };
 }
 
 do
 {
-    Console.SetCursorPosition(((int)Math.Floor(WIDTH / 2M)) -4, (int)Math.Floor(HEIGHT / 2M));
+    Console.SetCursorPosition(halfWidth - 4, halfHeight);
     Console.Write("ConSnake");
-    Console.SetCursorPosition(((int)Math.Floor(WIDTH / 2M)) - 14, ((int)Math.Floor(HEIGHT / 2M)) + 1);
+    Console.SetCursorPosition(halfWidth - 14, halfHeight + 1);
     Console.Write("Press the Any key to start");
     Console.ReadKey(false);
     NewGame();
@@ -91,12 +102,9 @@ do
             if (!tail.Any(t => t.SequenceEqual(newPos)) && newPos[0] < WIDTH - 1 && newPos[0] > 0 && newPos[1] < HEIGHT - 1 && newPos[1] > 0)
             {
                 //Update tail           
-                tail.Enqueue(new int[] { playerPos[0], playerPos[1] });
-                foreach (int[] tailPos in tail)
-                {
-                    Console.SetCursorPosition(tailPos[0], tailPos[1]);
-                    Console.Write(TAIL);
-                }
+                Console.SetCursorPosition(playerPos[0], playerPos[1]);
+                Console.Write(TAIL);
+                tail.Enqueue(playerPos);                
 
                 //remove tail tip
                 if (tail.Count > tailLength)
@@ -133,8 +141,11 @@ do
 
     } while (!isGameOver);
 
-    Console.SetCursorPosition(((int)Math.Floor(WIDTH / 2M)) - 5, (int)Math.Floor(HEIGHT / 2M));
-    Console.Write("Game Over!");
+    //Game Over
+    Console.SetCursorPosition(halfWidth - 6, halfHeight);
+    Console.Write(" Game Over! ");
+    Console.SetCursorPosition(halfWidth - 9, halfHeight + 1);
+    Console.Write($" Your score was {score}");
     Console.ReadKey(false);
     Console.Clear();
 
