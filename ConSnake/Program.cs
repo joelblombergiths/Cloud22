@@ -29,6 +29,12 @@ void NewGame()
     tail = new();
     tailLength = 0;
 
+    Console.SetCursorPosition(halfWidth - 4, halfHeight);
+    Console.Write("ConSnake");
+    Console.SetCursorPosition(halfWidth - 14, halfHeight + 1);
+    Console.Write("Press the Any key to start");
+    Console.ReadKey(false);
+
     Console.Clear();
 
     //Draw walls
@@ -36,8 +42,11 @@ void NewGame()
     {
         for (int j = 0; j < WIDTH; j++)
         {
-            Console.SetCursorPosition(j, i);
-            if ((i == 0 || i == HEIGHT - 1) || (j == 0 || j == WIDTH - 1)) Console.Write(WALL);
+            if ((i == 0 || i == HEIGHT - 1) || (j == 0 || j == WIDTH - 1))
+            {
+                Console.SetCursorPosition(j, i);
+                Console.Write(WALL);
+            }
         }
     }
 
@@ -74,12 +83,7 @@ int[] NewApplePos()
 }
 
 do
-{
-    Console.SetCursorPosition(halfWidth - 4, halfHeight);
-    Console.Write("ConSnake");
-    Console.SetCursorPosition(halfWidth - 14, halfHeight + 1);
-    Console.Write("Press the Any key to start");
-    Console.ReadKey(false);
+{    
     NewGame();
 
     do
