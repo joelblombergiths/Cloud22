@@ -17,6 +17,7 @@ Queue<int[]> tail;
 int tailLength;
 
 int score;
+int moveSpeed = 250;
 
 bool isGameOver;
 
@@ -33,7 +34,7 @@ void NewGame()
     Console.Write("ConSnake");
     Console.SetCursorPosition(halfWidth - 14, halfHeight + 1);
     Console.Write("Press the Any key to start");
-    Console.ReadKey(false);
+    Console.ReadKey(true);
 
     Console.Clear();
 
@@ -68,7 +69,7 @@ void NewGame()
 
 int[] NewApplePos()
 {
-    //find empty space for apple
+    //find empty space for the apple
     int counter = 0;
     do
     {
@@ -86,29 +87,20 @@ do
 {    
     NewGame();
 
-    do
-    {
-        //fetch input
-        (int x, int y) = Console.ReadKey(true).Key switch
-        {
-            ConsoleKey.LeftArrow => (-1, 0),
-            ConsoleKey.RightArrow => (1, 0),
-            ConsoleKey.UpArrow => (0, -1),
-            ConsoleKey.DownArrow => (0, 1),
-            _ => (0, 0)
-        };
+    (int x, int y) moveDir = (1, 0);
 
-        //check valid move
-        if (x == 0 ^ y == 0)
-        {
-            int[] newPos = { playerPos[0] + x, playerPos[1] + y };
+    do // GameLoop
+    {
+        do // UpdateLoop
+        {            
+            int[] newPos = { playerPos[0] + moveDir.x, playerPos[1] + moveDir.y };
 
             if (!tail.Any(t => t.SequenceEqual(newPos)) && newPos[0] < WIDTH - 1 && newPos[0] > 0 && newPos[1] < HEIGHT - 1 && newPos[1] > 0)
             {
                 //Update tail           
                 Console.SetCursorPosition(playerPos[0], playerPos[1]);
                 Console.Write(TAIL);
-                tail.Enqueue(playerPos);                
+                tail.Enqueue(playerPos);
 
                 //remove tail tip
                 if (tail.Count > tailLength)
@@ -141,16 +133,29 @@ do
                 }
             }
             else isGameOver = true;
-        }
 
-    } while (!isGameOver);
+            Thread.Sleep(moveSpeed);
+        }
+        while (!Console.KeyAvailable);
+
+        //fetch input
+        moveDir = Console.ReadKey(true).Key switch
+        {
+            ConsoleKey.LeftArrow => (-1, 0),
+            ConsoleKey.RightArrow => (1, 0),
+            ConsoleKey.UpArrow => (0, -1),
+            ConsoleKey.DownArrow => (0, 1),
+            _ => moveDir
+        };
+    }
+    while (!isGameOver);
 
     //Game Over
     Console.SetCursorPosition(halfWidth - 6, halfHeight);
     Console.Write(" Game Over! ");
     Console.SetCursorPosition(halfWidth - 9, halfHeight + 1);
     Console.Write($" Your score was {score}");
-    Console.ReadKey(false);
+    Console.ReadKey(true);
     Console.Clear();
 
 } while (true);
