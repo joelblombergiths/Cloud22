@@ -37,6 +37,7 @@ void NewGame()
     tailLength = 0;
     moveSpeed = START_SPEED;
 
+    //Show Menu
     Console.SetCursorPosition(halfWidth - 4, halfHeight - 2);
     Console.Write("ConSnake");
     Console.SetCursorPosition(halfWidth - 20, halfHeight - 1);
