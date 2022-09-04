@@ -4,6 +4,9 @@ Console.ForegroundColor = ConsoleColor.White;
 const int HEIGHT = 30;
 const int WIDTH = 100;
 const int MENU_ITEMS = 3;
+const int MAX_SPEED = 60;
+const int SPEED_DELTA = 20;
+
 
 int halfWidth = (int)Math.Floor(WIDTH / 2f);
 int halfHeight = (int)Math.Floor(HEIGHT / 2f);
@@ -84,6 +87,7 @@ do
 {
     NewGame();
 
+    //set initial direction
     (int left, int top) moveDir = (1, 0);
 
     do // GameLoop
@@ -126,7 +130,7 @@ do
                     Console.Write($"Score: {score} ");
 
                     //increase speed
-                    moveSpeed = moveSpeed >= 50 ? moveSpeed - Math.Abs(20 - score) : moveSpeed;
+                    moveSpeed = moveSpeed >= MAX_SPEED ? moveSpeed - (SPEED_DELTA - score) : moveSpeed;
 
                     //grow tail
                     tailLength++;
