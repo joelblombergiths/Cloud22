@@ -3,6 +3,10 @@ Console.ForegroundColor = ConsoleColor.White;
 
 const int HEIGHT = 30;
 const int WIDTH = 100;
+const int MENU_ITEMS = 3;
+
+int halfWidth = (int)Math.Floor(WIDTH / 2f);
+int halfHeight = (int)Math.Floor(HEIGHT / 2f);
 
 const string PLAYER = "Ö";
 const string TAIL = "O";
@@ -12,49 +16,58 @@ const string APPLE = "@";
 
 int[] playerPos;
 int[] applePos;
+int[,] wall;
 
 Queue<int[]> tail;
 int tailLength;
 
 int score;
-int moveSpeed = 250;
+int moveSpeed;
 
 bool isGameOver;
-
-int halfWidth = (int)Math.Floor(WIDTH / 2f);
-int halfHeight = (int)Math.Floor(HEIGHT / 2f);
 
 void NewGame()
 {
     isGameOver = false;
     tail = new();
     tailLength = 0;
+    moveSpeed = 250;
 
-    Console.SetCursorPosition(halfWidth - 4, halfHeight);
+    Console.SetCursorPosition(halfWidth - 4, halfHeight - 2);
     Console.Write("ConSnake");
-    Console.SetCursorPosition(halfWidth - 14, halfHeight + 1);
-    Console.Write("Press the Any key to start");
-    Console.ReadKey(true);
+    Console.SetCursorPosition(halfWidth - 20, halfHeight - 1);
+    Console.Write("Press the coresponding key to start level");
+    Console.SetCursorPosition(halfWidth - 5, halfHeight);
+    Console.Write("1: Easy");
+    Console.SetCursorPosition(halfWidth - 5, halfHeight + 1);
+    Console.Write("2: Medium");
+    Console.SetCursorPosition(halfWidth - 5, halfHeight + 2);
+    Console.Write("3: Hard");
+    
+    //Fetch level selection
+    int difficulty;
+    bool isValidInput = false;
+    do
+    {
+        char key = Console.ReadKey(true).KeyChar;
+        isValidInput = int.TryParse(key.ToString(), out difficulty) && difficulty > 0 && difficulty <= MENU_ITEMS;
+    }
+    while (!isValidInput);
 
     Console.Clear();
 
     //Draw walls
-    for (int i = 0; i < HEIGHT; i++)
+    wall = BuildLevel(difficulty);
+    for (int i = 0; i < wall.GetLength(0); i++)
     {
-        for (int j = 0; j < WIDTH; j++)
-        {
-            if ((i == 0 || i == HEIGHT - 1) || (j == 0 || j == WIDTH - 1))
-            {
-                Console.SetCursorPosition(j, i);
-                Console.Write(WALL);
-            }
-        }
+        Console.SetCursorPosition(wall[i, 0], wall[i, 1]);
+        Console.Write(WALL);
     }
 
     //Draw player
-    playerPos = new int[2] { halfWidth, halfHeight };        
+    playerPos = new int[2] { halfWidth + 2, halfHeight + 2 };
     Console.SetCursorPosition(playerPos[0], playerPos[1]);
-    Console.Write(PLAYER);    
+    Console.Write(PLAYER);
 
     //Draw apple
     applePos = NewApplePos();
@@ -67,35 +80,19 @@ void NewGame()
     Console.Write($"Score: {score} ");
 }
 
-int[] NewApplePos()
-{
-    //find empty space for the apple
-    int counter = 0;
-    do
-    {
-        int[] tmp = new int[2] { Random.Shared.Next(1, WIDTH - 1), Random.Shared.Next(1, HEIGHT - 1) };
-        if (!playerPos.SequenceEqual(tmp) && !tail.Any(t => t.SequenceEqual(tmp))) return tmp;
-        else counter++;
-    } while (counter <= ((HEIGHT - 1) * (WIDTH - 1)));
-    
-    //if gameboard full then GameOver
-    isGameOver = true;
-    return new int[] { 0, 0 };
-}
-
 do
-{    
+{
     NewGame();
 
-    (int x, int y) moveDir = (1, 0);
+    (int left, int top) moveDir = (1, 0);
 
     do // GameLoop
     {
         do // UpdateLoop
-        {            
-            int[] newPos = { playerPos[0] + moveDir.x, playerPos[1] + moveDir.y };
+        {
+            int[] newPos = { playerPos[0] + moveDir.left, playerPos[1] + moveDir.top };
 
-            if (!tail.Any(t => t.SequenceEqual(newPos)) && newPos[0] < WIDTH - 1 && newPos[0] > 0 && newPos[1] < HEIGHT - 1 && newPos[1] > 0)
+            if (!IsCollision(newPos))
             {
                 //Update tail           
                 Console.SetCursorPosition(playerPos[0], playerPos[1]);
@@ -128,25 +125,35 @@ do
                     Console.SetCursorPosition(0, 0);
                     Console.Write($"Score: {score} ");
 
+                    //increase speed
+                    moveSpeed = moveSpeed >= 50 ? moveSpeed - Math.Abs(20 - score) : moveSpeed;
+
                     //grow tail
                     tailLength++;
                 }
             }
-            else isGameOver = true;
+            else
+            {
+                isGameOver = true;
+                break;
+            }
 
             Thread.Sleep(moveSpeed);
         }
         while (!Console.KeyAvailable);
 
-        //fetch input
-        moveDir = Console.ReadKey(true).Key switch
+        if (!isGameOver)
         {
-            ConsoleKey.LeftArrow => (-1, 0),
-            ConsoleKey.RightArrow => (1, 0),
-            ConsoleKey.UpArrow => (0, -1),
-            ConsoleKey.DownArrow => (0, 1),
-            _ => moveDir
-        };
+            //fetch input
+            moveDir = Console.ReadKey(true).Key switch
+            {
+                ConsoleKey.LeftArrow => (-1, 0),
+                ConsoleKey.RightArrow => (1, 0),
+                ConsoleKey.UpArrow => (0, -1),
+                ConsoleKey.DownArrow => (0, 1),
+                _ => moveDir
+            };
+        }
     }
     while (!isGameOver);
 
@@ -158,4 +165,118 @@ do
     Console.ReadKey(true);
     Console.Clear();
 
-} while (true);
+}
+while (true);
+
+int[,] BuildLevel(int difficulty)
+{
+    //build outer walls
+    int[,] outerWall = GenerateWalls(1);
+
+    if (difficulty > 1)
+    {
+        //build inner walls
+        int[,] innerWall = GenerateWalls(difficulty);
+
+        //Combine all wallparts in one array
+        int outerWallParts = outerWall.GetLength(0) * outerWall.GetLength(1);
+        int innerWallParts = innerWall.GetLength(0) * innerWall.GetLength(1);
+
+        int[,] combinedWall = new int[outerWallParts + innerWallParts, 2];
+        Array.Copy(outerWall, combinedWall, outerWallParts);
+        Array.Copy(innerWall, 0, combinedWall, outerWallParts, innerWallParts);
+
+        return combinedWall;
+    }
+    else return outerWall;
+}
+
+int[,] GenerateWalls(int difficulty)
+{
+    int part = 0;
+    int[,] generatedWall;
+
+    //Easy level walls
+    if (difficulty == 1)
+    {
+        generatedWall = new int[(WIDTH * 2 + (HEIGHT - 2) * 2), 2];
+        for (int h = 0; h < HEIGHT; h++)
+        {
+            for (int w = 0; w < WIDTH; w++)
+            {
+                if ((h == 0 || h == HEIGHT - 1) || (w == 0 || w == WIDTH - 1))
+                {
+                    generatedWall[part, 0] = w;
+                    generatedWall[part, 1] = h;
+                    part++;
+                }
+            }
+        }
+    }
+    //Medium level walls
+    else if (difficulty == 2)
+    {
+        generatedWall = new int[HEIGHT - 2, 2];
+
+        for (int i = 0; i < HEIGHT - 1; i++)
+        {
+            if (i != halfHeight)
+            {
+                generatedWall[part, 0] = halfWidth;
+                generatedWall[part, 1] = i;
+                part++;
+            }
+        }
+    }
+    //Hard level walls
+    else if (difficulty == 3)
+    {
+        generatedWall = new int[(HEIGHT - 2) + (WIDTH - 2), 2];
+
+        for (int i = 1; i < HEIGHT - 1; i++)
+        {
+            for (int j = 1; j < WIDTH - 1; j++)
+            {
+                if ((i == halfHeight ^ j == halfWidth) && (i == halfHeight - 1 ^ i != halfHeight + 1) && (j == halfWidth - 1 ^ j != halfWidth + 1))
+                {
+                    generatedWall[part, 0] = j;
+                    generatedWall[part, 1] = i;
+                    part++;
+                }
+            }
+        }
+    }
+    else generatedWall = new int[0, 0];
+
+    return generatedWall;
+}
+
+int[] NewApplePos()
+{
+    //find empty space for the apple
+    int counter = 0;
+    do
+    {
+        int[] tmp = new int[2] { Random.Shared.Next(1, WIDTH - 1), Random.Shared.Next(1, HEIGHT - 1) };
+        if (!IsCollision(tmp)) return tmp;
+        else counter++;
+    } while (counter <= ((HEIGHT - 1) * (WIDTH - 1)));
+
+    //if gameboard full then GameOver
+    isGameOver = true;
+    return new int[] { 0, 0 };
+}
+
+bool IsCollision(int[] pos)
+{
+    //check for walls
+    for (int i = 0; i < wall.GetLength(0); i++)
+    {
+        if (wall[i, 0] == pos[0] && wall[i, 1] == pos[1]) return true;
+    }
+
+    //check for other objects
+    if (playerPos.SequenceEqual(pos)) return true;
+    else if (tail.Any(t => t.SequenceEqual(pos))) return true;
+    else return false;
+}
