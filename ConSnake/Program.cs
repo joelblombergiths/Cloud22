@@ -33,7 +33,7 @@ void NewGame()
     Console.Write("ConSnake");
     Console.SetCursorPosition(halfWidth - 14, halfHeight + 1);
     Console.Write("Press the Any key to start");
-    Console.ReadKey(false);
+    Console.ReadKey(true);
 
     Console.Clear();
 
@@ -150,7 +150,7 @@ do
     Console.Write(" Game Over! ");
     Console.SetCursorPosition(halfWidth - 9, halfHeight + 1);
     Console.Write($" Your score was {score}");
-    Console.ReadKey(false);
+    Console.ReadKey(true);
     Console.Clear();
 
 } while (true);
