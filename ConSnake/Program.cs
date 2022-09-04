@@ -4,6 +4,7 @@ Console.ForegroundColor = ConsoleColor.White;
 const int HEIGHT = 30;
 const int WIDTH = 100;
 const int MENU_ITEMS = 3;
+const int START_SPEED = 250;
 const int MAX_SPEED = 60;
 const int SPEED_DELTA = 20;
 
@@ -34,7 +35,7 @@ void NewGame()
     isGameOver = false;
     tail = new();
     tailLength = 0;
-    moveSpeed = 250;
+    moveSpeed = START_SPEED;
 
     Console.SetCursorPosition(halfWidth - 4, halfHeight - 2);
     Console.Write("ConSnake");
