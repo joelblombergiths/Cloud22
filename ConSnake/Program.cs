@@ -51,7 +51,7 @@ void NewGame()
     
     //Fetch level selection
     int difficulty;
-    bool isValidInput = false;
+    bool isValidInput;
     do
     {
         char key = Console.ReadKey(true).KeyChar;
