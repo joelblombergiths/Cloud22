@@ -271,9 +271,42 @@ void uppg37()
 }
 
 
+
+void uppg40()
+{
+    string message = "Kopiera all text i denna uppgiften och lägg in i en sträng-variabel. Skriv ett program som visar texten som en rullande text med 10 teckens bredd på översta raden i din konsolapp. Man ska alltså se endast 10 tecken åt gången, men texten ska “rulla” fram från höger till vänster, så att man kan läsa hela texten.. Hitta en lagom hastighet att uppdatera texten så att det blir behagligt att läsa. När hela texten rullat förbi ska den börja om igen.";
+    //string message = "baaaaaaaaaa";
+    int counter = 0;
+    int splitCounter = 0;
+    do
+    {
+        Console.SetCursorPosition(0, 0);
+        
+        if (counter < message.Length - 10)
+        {
+            Console.WriteLine(message.Substring(counter, 10));
+            counter++;
+        }
+        else
+        {
+            Console.Write(message.Substring(counter, 10 - (splitCounter + 1)));
+            Console.Write(message.Substring(splitCounter, 10 - splitCounter));
+            splitCounter++;
+            if(splitCounter < 0)
+            {
+                counter = 0;
+                splitCounter = 0;
+            }
+        }
+
+        Thread.Sleep(100);
+    }
+    while (true);
+}
 while (true)
 {
-    uppg37();
+    uppg40();
     Console.ReadKey();
     Console.Clear();
 }
+

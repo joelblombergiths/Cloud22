@@ -48,7 +48,7 @@ void NewGame()
     Console.Write("2: Medium");
     Console.SetCursorPosition(halfWidth - 5, halfHeight + 2);
     Console.Write("3: Hard");
-    
+
     //Fetch level selection
     int difficulty;
     bool isValidInput;
@@ -90,13 +90,13 @@ do
     NewGame();
 
     //set initial direction
-    (int left, int top) moveDir = (1, 0);
+    int[] moveDir = { 1, 0 };
 
     do // GameLoop
     {
         do // UpdateLoop
         {
-            int[] newPos = { playerPos[0] + moveDir.left, playerPos[1] + moveDir.top };
+            int[] newPos = { playerPos[0] + moveDir[0], playerPos[1] + moveDir[1] };
 
             if (!IsCollision(newPos))
             {
@@ -153,10 +153,10 @@ do
             //fetch input
             moveDir = Console.ReadKey(true).Key switch
             {
-                ConsoleKey.LeftArrow => (-1, 0),
-                ConsoleKey.RightArrow => (1, 0),
-                ConsoleKey.UpArrow => (0, -1),
-                ConsoleKey.DownArrow => (0, 1),
+                ConsoleKey.LeftArrow => new int[] { -1, 0 },
+                ConsoleKey.RightArrow => new int[] { 1, 0 },
+                ConsoleKey.UpArrow => new int[] { 0, -1 },
+                ConsoleKey.DownArrow => new int[] { 0, 1 },
                 _ => moveDir
             };
         }
@@ -266,7 +266,7 @@ int[] NewApplePos()
         int[] tmp = new int[2] { Random.Shared.Next(1, WIDTH - 1), Random.Shared.Next(1, HEIGHT - 1) };
         if (!IsCollision(tmp)) return tmp;
         else counter++;
-    } while (counter <= ((HEIGHT - 1) * (WIDTH - 1)));
+    } while (counter < (HEIGHT * WIDTH) - (wall.GetLength(0) * wall.GetLength(1)) - tail.Count);
 
     //if gameboard full then GameOver
     isGameOver = true;
