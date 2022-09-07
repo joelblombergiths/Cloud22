@@ -273,7 +273,7 @@ void uppg66()
         }
         else if (number / 100 > 0)
         {
-            Console.Write(GetDigitAsText(number / 100));
+            WriteNumberWithWords(number / 100);
             Console.Write(" Hundred ");
             WriteNumberWithWords(number % 100);
         }
