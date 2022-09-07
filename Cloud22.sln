@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v35Fre", "v35Fre\v35Fre.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConSnake", "ConSnake\ConSnake.csproj", "{0227C327-B867-4DAF-8A61-C1D741D9EBA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v36mon", "v36mon\v36mon.csproj", "{A258F563-E283-4543-BF8D-7A9C8001B4AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v36mon", "v36mon\v36mon.csproj", "{A258F563-E283-4543-BF8D-7A9C8001B4AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v36ons", "v36ons\v36ons.csproj", "{D89C7094-E21D-47F5-B482-8B20E3E85687}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{A258F563-E283-4543-BF8D-7A9C8001B4AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A258F563-E283-4543-BF8D-7A9C8001B4AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A258F563-E283-4543-BF8D-7A9C8001B4AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

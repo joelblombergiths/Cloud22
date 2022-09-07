@@ -1,27 +1,24 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+//void PrintGreetingMultipleTimes(string name) => PrintGreetingMultipleTimes(name, 1);
 
-using System.Linq;
-
-Console.WriteLine("Mini Upg 1");
-for(int i = 9; i > 0; i--)
+internal class Program
 {
-    Console.Write(i);
-}
+    private static void Main(string[] args)
+    {
 
-Console.WriteLine();
+        PrintGreetingMultipleTimes("Kalle");
+        PrintGreetingMultipleTimes("Adam", 2);
+        PrintGreetingMultipleTimes("David", 3, true);
+    }
 
-Console.WriteLine(string.Concat(Enumerable.Range(1,9).Reverse()));
-
-
-Console.WriteLine();
-Console.WriteLine();
-Console.WriteLine("Mini Upg 2");
-Console.Write("Name, please: ");
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-string name = Console.ReadLine();
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-
-for (int i = 0; i < 10; i++)
-{
-    Console.WriteLine(name);
+    static void PrintGreetingMultipleTimes(string name) => PrintGreetingMultipleTimes(name, 1, false);
+    static void PrintGreetingMultipleTimes(string name, int numberTimes) => PrintGreetingMultipleTimes(name, numberTimes, false);
+    static void PrintGreetingMultipleTimes(string name, bool exclaim) => PrintGreetingMultipleTimes(name, 1, exclaim);
+    static void PrintGreetingMultipleTimes(string name, int numberTimes, bool exclaim)
+    {
+        for (int i = 0; i < numberTimes; i++)
+        {
+            Console.WriteLine($"Hello, {name}{(exclaim ? "!!!" : string.Empty)}");
+        }
+    }
 }
