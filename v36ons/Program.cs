@@ -311,8 +311,138 @@ void uppg66()
     }
 }
 
+void uppg67()
+{
+    Console.WriteLine("Enter degrees Celcius:");
+    double celsius = double.Parse(Console.ReadLine());
+
+    Console.WriteLine(ConvertCelciusToFarenheit(celsius));
+    
+    double ConvertCelciusToFarenheit(double degreesCelsius)
+    {
+        return degreesCelsius * (9 / 5) + 32;
+    }
+}
+
+void uppg68()
+{
+    //Regeln för rövarspråket är att man efter varje konsonant lägger ett o (kort å-ljud) och därefter samma konsonant igen,
+    //till exempel byts b ut mot "bob" och f mot "fof". Vokalerna är oförändrade. "Jag talar rövarspråket" blir alltså "jojagog totalolaror rorövovarorsospoproråkoketot"
+    // bokstaven C som S eller som K, beroende på sammanhang, alla c som följs av ett k blir "k", medan övriga c blir "s".
+    // X betraktas i rövarspråket vanligen som två separata ljud. Istället för "xox" behandlas x istället som "ks" och blir "koksos". Sax uttalas därför i rövarspråket som sosakoksos.
+
+    Console.WriteLine("Enter text");
+    string text = Console.ReadLine();
+
+    string robberSpeech = ConvertToRobberSpeech(text);
+    Console.WriteLine(robberSpeech);
+    Console.WriteLine();
+    Console.WriteLine(ConvertFromRobberSeech(robberSpeech));
+
+
+    string ConvertFromRobberSeech(string robberSpeech)
+    {
+        char[] consonants = { 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z' };
+
+        string normalText = string.Empty;
+
+        for (int i = 0; i < robberSpeech.Length; i++)
+        {
+            char currentLetter = robberSpeech[i];
+
+            if(consonants.Contains(currentLetter))
+            {
+                if (currentLetter.Equals('k'))
+                {
+                    string specialRule = "k";
+
+                    if (i + 3 < robberSpeech.Length)
+                    {
+                        char nextLetter = robberSpeech[i + 3];
+
+                        if (nextLetter.Equals('s'))
+                        {
+                            specialRule = "x";
+                            i += 4;
+                        }
+                        else if (nextLetter.Equals('k'))
+                        {
+                            specialRule = "c";
+                        }
+                    }
+                                        
+                    normalText += specialRule;
+                }
+                else
+                {
+                    normalText += currentLetter.ToString();
+                }
+
+                i += 2;
+            }
+            else
+            {
+                normalText += currentLetter.ToString();
+            }
+        }
+
+        return normalText;
+    }
+
+    string ConvertToRobberSpeech(string originalText)
+    {
+        string robberText = string.Empty;
+
+        for (int i = 0; i < originalText.Length; i++)
+        {
+            char currentLetter = originalText[i];
+
+            if(currentLetter.Equals('x'))
+            {
+                robberText += GetTranslatedLetter('k');
+                robberText += GetTranslatedLetter('s');
+            }
+            else if(currentLetter.Equals('c'))
+            {
+                if (i + 1 < originalText.Length && originalText[i + 1].Equals('k'))
+                {
+                    robberText += GetTranslatedLetter('k');
+                }
+                else
+                {
+                    robberText += GetTranslatedLetter('s');
+                }
+            }
+            else
+            {
+                robberText += GetTranslatedLetter(currentLetter);
+            }
+        }
+
+        return robberText;
+    }
+
+    string GetTranslatedLetter(char letter)
+    {
+        char[] consonants = { 'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z' };
+
+        string translatedLetter = string.Empty;
+
+        if (consonants.Contains(letter))
+        {
+            translatedLetter = $"{letter}o{letter}";
+        }
+        else
+        {
+            translatedLetter = letter.ToString();
+        }
+
+        return translatedLetter;
+    }
+}
+
 while (true)
 {
-    uppg66();
+    uppg68();
     Console.ReadKey(true);
 }
