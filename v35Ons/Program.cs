@@ -622,7 +622,7 @@ void loop33()
 
 while (true)
 {
-    uppg18();
+     uppg18();
     Console.ReadKey();
     Console.Clear();
 }

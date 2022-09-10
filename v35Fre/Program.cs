@@ -305,7 +305,7 @@ void uppg40()
 }
 while (true)
 {
-    uppg40();
+    uppg36();
     Console.ReadKey();
     Console.Clear();
 }

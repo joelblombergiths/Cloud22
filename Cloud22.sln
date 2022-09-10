@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "slask", "slask\slask.csproj", "{05896021-EACD-46EC-86A3-43222E7A7868}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excercises", "Excercises\Excercises.csproj", "{827F8EBE-9D16-4BB8-8C43-8530A569B209}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v35Ons", "v35Ons\v35Ons.csproj", "{156046FE-05F9-480F-8CD3-9733C3D491A2}"
@@ -15,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConSnake", "ConSnake\ConSna
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v36mon", "v36mon\v36mon.csproj", "{A258F563-E283-4543-BF8D-7A9C8001B4AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v36ons", "v36ons\v36ons.csproj", "{D89C7094-E21D-47F5-B482-8B20E3E85687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "v36ons", "v36ons\v36ons.csproj", "{D89C7094-E21D-47F5-B482-8B20E3E85687}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Slask", "Slask\Slask.csproj", "{7DA21013-204C-42D1-AA20-6B584E51B1DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{05896021-EACD-46EC-86A3-43222E7A7868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05896021-EACD-46EC-86A3-43222E7A7868}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05896021-EACD-46EC-86A3-43222E7A7868}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05896021-EACD-46EC-86A3-43222E7A7868}.Release|Any CPU.Build.0 = Release|Any CPU
 		{827F8EBE-9D16-4BB8-8C43-8530A569B209}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{827F8EBE-9D16-4BB8-8C43-8530A569B209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{827F8EBE-9D16-4BB8-8C43-8530A569B209}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D89C7094-E21D-47F5-B482-8B20E3E85687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DA21013-204C-42D1-AA20-6B584E51B1DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DA21013-204C-42D1-AA20-6B584E51B1DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DA21013-204C-42D1-AA20-6B584E51B1DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DA21013-204C-42D1-AA20-6B584E51B1DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

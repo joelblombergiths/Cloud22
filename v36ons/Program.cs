@@ -4,6 +4,8 @@
 #pragma warning disable CS8321 // Local function is declared but never used
 
 
+using System.Diagnostics;
+
 void uppg56()
 {
     Console.WriteLine("Enter first name:");
@@ -373,17 +375,11 @@ void uppg68()
                                         
                     normalText += specialRule;
                 }
-                else
-                {
-                    normalText += currentLetter.ToString();
-                }
+                else normalText += currentLetter.ToString();
 
                 i += 2;
             }
-            else
-            {
-                normalText += currentLetter.ToString();
-            }
+            else normalText += currentLetter.ToString();
         }
 
         return normalText;
@@ -441,8 +437,82 @@ void uppg68()
     }
 }
 
+void uppg69()
+{
+    Console.WriteLine("Enter text:");
+    string text = Console.ReadLine();
+
+    bool isPalindrome = true;
+    text = text.Replace(" ", string.Empty);
+    for (int i = 0; i < text.Length / 2; i++)
+    {
+        if (text[i] != text[^(i + 1)])
+        {
+            isPalindrome = false;
+            break;
+        }
+    }
+
+    Console.WriteLine(isPalindrome);
+}
+
+void uppg71()
+{
+    int n = 4;
+    int sum = 0;
+    for (int i = 1; i <= n; i++)
+    {
+        sum += i;
+    }
+    Console.WriteLine(sum);
+    Console.WriteLine();
+    Console.WriteLine(Factorial(n));
+
+    int Factorial(int n)
+    {
+        if (n == 1) return 1;
+        else return n + Factorial(n - 1);
+    }
+}
+
+void uppg72()
+{
+    Console.WriteLine("Enter number:");
+    int n = int.Parse(Console.ReadLine());
+
+    ulong a = 0;
+    ulong b = 1;
+    ulong fib = 0;
+
+    Stopwatch s = Stopwatch.StartNew();
+    for (int i = 0; i < n; i++)
+    {
+        fib = a + b;
+        a = b;
+        b = fib;        
+    }
+    s.Stop();
+    //Console.WriteLine(fib);
+    Console.WriteLine(s.Elapsed.TotalMilliseconds);
+
+
+    s = Stopwatch.StartNew();
+    Fibonacci(n);
+    s.Stop();
+    //Console.WriteLine(Fibonacci(n));
+    Console.WriteLine(s.Elapsed.TotalMilliseconds);
+
+
+
+    ulong Fibonacci(int n)
+    {
+        if (n <= 1) return 1;
+        else return Fibonacci(n - 1) + Fibonacci(n - 2);        
+    }
+}
+
 while (true)
 {
-    uppg68();
+    uppg72();
     Console.ReadKey(true);
 }
