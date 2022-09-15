@@ -480,34 +480,47 @@ void uppg72()
     Console.WriteLine("Enter number:");
     int n = int.Parse(Console.ReadLine());
 
-    ulong a = 0;
-    ulong b = 1;
-    ulong fib = 0;
+    //ulong a = 0;
+    //ulong b = 1;
+    //ulong fib = 0;
 
-    Stopwatch s = Stopwatch.StartNew();
-    for (int i = 0; i < n; i++)
-    {
-        fib = a + b;
-        a = b;
-        b = fib;        
-    }
-    s.Stop();
+    //Stopwatch s = Stopwatch.StartNew();
+    //for (int i = 0; i < n; i++)
+    //{
+    //    fib = a + b;
+    //    a = b;
+    //    b = fib;        
+    //}
+    //s.Stop();
+    ////Console.WriteLine(fib);
+    //Console.WriteLine(s.Elapsed.TotalMilliseconds);
+
+    //Fibonacci(1);
+    //s = Stopwatch.StartNew();
+
+    // int fib = Fibonacci(n);
+    //s.Stop();
+
+    //Console.WriteLine(s.Elapsed.TotalMilliseconds);
     //Console.WriteLine(fib);
-    Console.WriteLine(s.Elapsed.TotalMilliseconds);
 
-
-    s = Stopwatch.StartNew();
-    Fibonacci(n);
-    s.Stop();
-    //Console.WriteLine(Fibonacci(n));
-    Console.WriteLine(s.Elapsed.TotalMilliseconds);
-
-
-
-    ulong Fibonacci(int n)
+    for (int i = 1; i <= n; i++)
     {
-        if (n <= 1) return 1;
-        else return Fibonacci(n - 1) + Fibonacci(n - 2);        
+        int fib = Fibonacci(i);
+        
+        Console.WriteLine(fib);
+    }
+
+    int Fibonacci(int number, int a = 0, int b = 1, int counter = 2 )
+    {
+        if (number <= 1) return a;
+        else if (number == 2) return b;
+        else
+        {
+            int fib = a + b;
+            if (counter == number) return fib;
+            else return Fibonacci(number, b, fib, counter + 1);
+        }
     }
 }
 
