@@ -15,12 +15,7 @@ namespace HangMan
         public string RevealWord => theWord;
         public int WordLength => theWord.Length;
         public string PrevGuesses => string.Join(",", guessedLetters);
-
-        public WordMaster()
-        {
-            NewGame();
-        }
-
+        
         public void NewGame()
         {
             guessedLetters = new();

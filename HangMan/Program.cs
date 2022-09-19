@@ -24,57 +24,65 @@ const int GUESS_ROW = 15;
 Gallow gallow = new();
 WordMaster wordMaster = new();
 
-string currGuess;
-bool isGameOver = false;
 do
 {
-    PrintMaskedWord();
-    PrintPrevGuesses();
+    gallow.Reset();
+    wordMaster.NewGame();
 
-    currGuess = RequestUserInput();
-
-    if (currGuess.Length == 1)
+    string currGuess;
+    bool isGameOver = false;
+    do
     {
-        if (wordMaster.GuessLetter(currGuess[0]))
+        PrintMaskedWord();
+        PrintPrevGuesses();
+
+        currGuess = RequestUserInput();
+
+        if (currGuess.Length == 1)
         {
-            if (wordMaster.IsGameWon)
+            if (wordMaster.GuessLetter(currGuess[0]))
+            {
+                if (wordMaster.IsGameWon)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Success");
+                    isGameOver = true;
+                }
+            }
+            else
+            {
+                gallow.DrawNextPart();
+
+                if (gallow.IsGameOver)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("You Died!");
+                    isGameOver = true;
+                }
+            }
+        }
+        else
+        {
+            if (wordMaster.GuessWord(currGuess))
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Success");
+                Console.WriteLine("Correct!");
                 isGameOver = true;
             }
-        }
-        else
-        {
-            gallow.DrawNextPart();
-
-            if (gallow.IsGameOver)
+            else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("You Died!");
+                Console.WriteLine("Fail");
                 isGameOver = true;
             }
         }
     }
-    else
-    {
-        if (wordMaster.GuessWord(currGuess))
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Correct!");
-            isGameOver = true;
-        }
-        else
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Fail");
-            isGameOver = true;
-        }
-    }
-}
-while (!isGameOver);
+    while (!isGameOver);
 
-PrintMaskedWord(true);
+    PrintMaskedWord(true);
+    Console.ReadKey(true);    
+}
+while (true);
 
 void PrintMaskedWord(bool revealWord = false)
 {
@@ -109,5 +117,3 @@ string RequestUserInput()
 
     return input;
 }
-
-Console.ReadKey(true);

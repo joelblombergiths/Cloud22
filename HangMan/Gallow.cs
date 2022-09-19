@@ -2,16 +2,14 @@
 {
     internal class Gallow
     {
-        private readonly List<Part> parts;
-        private readonly int maxStages = 10;
-
+        private static readonly List<Part> parts = new() { new Hill(), new VerticalBeam(), new HorizontalBeam(), new Rope(), new Head(), new Body(), new LeftArm(), new RightArm(), new LeftLeg(), new RightLeg() };
+        
         private int stage = 0;
-
-        public Gallow() => parts = new() { new Hill(), new VerticalBeam(), new HorizontalBeam(), new Rope(), new Head(), new Body(), new LeftArm(), new RightArm(), new LeftLeg(), new RightLeg() };
+        public bool IsGameOver => stage == parts.Count;
 
         public void DrawNextPart()
         {
-            if (stage <= maxStages)
+            if (stage < parts.Count)
             {
                 Part current = parts.ElementAt(stage);
                 current.DrawPart();
@@ -20,7 +18,11 @@
             }
         }
 
-        public bool IsGameOver => stage >= maxStages;
+        public void Reset()
+        {
+            stage = 0;
+            Console.Clear();
+        }
     }
 
     abstract class Part
