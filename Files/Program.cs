@@ -13,12 +13,16 @@ if (file.Exists)
 
     if(CheckIfPngFile(fs))
     {
+        Console.WriteLine("Signature found, is PNG file");
+
         PrintPngMetaData(fs);
 
         if (!file.Extension.ToLower().Equals(".png")) Console.WriteLine("File Extension missmatch");
     }
     else if(CheckIfBmpFile(fs))
     {
+        Console.WriteLine("Signature found, is BMP file");
+
         PrintBmpMetaData(fs);
 
         if (!file.Extension.ToLower().Equals(".bmp")) Console.WriteLine("File Extension missmatch");
@@ -43,7 +47,7 @@ bool CheckIfPngFile(FileStream fs)
 
 bool CheckIfBmpFile(FileStream fs)
 {
-    byte[] bmpSignature = new byte[2] { 0x42, 0x4D };
+    byte[] bmpSignature = new byte[] { 0x42, 0x4D };
     byte[] signature = new byte[2];
 
     fs.Seek(0, SeekOrigin.Begin);
@@ -58,9 +62,7 @@ void PrintPngMetaData(FileStream fs)
     const int CRC_LENGTH = 4;
 
     byte[] IHDR = new byte[] { 0x49, 0x48, 0x44, 0x52 };
-
-    Console.WriteLine("Signature found, is PNG file");
-
+    
     byte[] chunkLen = new byte[4];
     uint length;
 
@@ -112,9 +114,7 @@ void PrintPngMetaData(FileStream fs)
 
 void PrintBmpMetaData(FileStream fs)
 {
-    const int RESOLUTION_OFFSET = 18;
-
-    Console.WriteLine("Signature found, is BMP file");
+    const int RESOLUTION_OFFSET = 18;    
 
     fs.Seek(RESOLUTION_OFFSET, SeekOrigin.Begin);
     byte[] widthBytes = new byte[4];
