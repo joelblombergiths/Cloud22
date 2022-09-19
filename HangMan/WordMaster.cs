@@ -11,22 +11,23 @@ namespace HangMan
         private List<int> foundLetters;
         private List<char> guessedLetters;
 
+        public bool IsGameWon => foundLetters.Count == theWord.Length;
+        public string RevealWord => theWord;
+        public int WordLength => theWord.Length;
+        public string PrevGuesses => string.Join(",", guessedLetters);
+
         public WordMaster()
         {
             NewGame();
         }
 
-        private void NewGame()
+        public void NewGame()
         {
             guessedLetters = new();
             foundLetters = new();
 
             theWord = Words.ElementAt(Random.Shared.Next(Words.Count));
         }
-
-        public bool IsGameWon => foundLetters.Count == theWord.Length;
-
-        public string RevealWord => theWord;
 
         public string GetMaskedWord()
 	    {
@@ -59,7 +60,7 @@ namespace HangMan
                 }
             }
 
-            guessedLetters.Add(letter);
+            if(!foundLetter) guessedLetters.Add(letter);
 
             return foundLetter;
         }
@@ -69,7 +70,5 @@ namespace HangMan
             return theWord.Equals(word);
         }
 
-        public string GetPrevGuesses() => string.Join(",", guessedLetters);
-        public int WordLength => theWord.Length;
     }
 }
