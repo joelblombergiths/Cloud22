@@ -9,18 +9,18 @@
 
         public Gallow() => parts = new() { new Hill(), new VerticalBeam(), new HorizontalBeam(), new Rope(), new Head(), new Body(), new LeftArm(), new RightArm(), new LeftLeg(), new RightLeg() };
 
-        public bool DrawNextPart()
+        public void DrawNextPart()
         {
-            if (stage >= maxStages) return false;
-            else
+            if (stage <= maxStages)
             {
                 Part current = parts.ElementAt(stage);
                 current.DrawPart();
 
                 stage++;
-                return true;
             }
         }
+
+        public bool IsGameOver => stage >= maxStages;
     }
 
     abstract class Part
