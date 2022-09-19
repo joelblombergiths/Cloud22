@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HangMan
+﻿namespace HangMan
 {
     internal class Gallow
     {
-        private List<Part> parts;
+        private readonly List<Part> parts;
+        private readonly int maxStages = 10;
+
         private int stage = 0;
-        private int maxStages = 10;
 
         public Gallow() => parts = new() { new Hill(), new VerticalBeam(), new HorizontalBeam(), new Rope(), new Head(), new Body(), new LeftArm(), new RightArm(), new LeftLeg(), new RightLeg() };
 
@@ -23,11 +18,11 @@ namespace HangMan
                 current.DrawPart();
 
                 stage++;
-                return true;                 
+                return true;
             }
         }
     }
-       
+
     abstract class Part
     {
         public abstract void DrawPart();
@@ -39,13 +34,13 @@ namespace HangMan
         {
             int left = 12;
             int top = 8;
-            Console.SetCursorPosition(left, top);
+            Console.SetCursorPosition(left--, top++);
             Console.Write(@"/\");
-            Console.SetCursorPosition(--left, ++top);
+            Console.SetCursorPosition(left--, top++);
             Console.Write(@"/  \");
-            Console.SetCursorPosition(--left, ++top);
+            Console.SetCursorPosition(left--, top++);
             Console.Write(@"/    \");
-            Console.SetCursorPosition(--left, ++top);
+            Console.SetCursorPosition(left, top);
             Console.Write(@"/      \");
         }
     }
@@ -144,9 +139,9 @@ namespace HangMan
         {
             int left = 1;
             int top = 6;
-            Console.SetCursorPosition(left, top);
+            Console.SetCursorPosition(left--, top++);
             Console.Write(@"/");
-            Console.SetCursorPosition(--left, ++top);
+            Console.SetCursorPosition(left, top);
             Console.Write(@"/");
         }
     }
@@ -157,9 +152,9 @@ namespace HangMan
         {
             int left = 2;
             int top = 6;
-            Console.SetCursorPosition(left, top);
+            Console.SetCursorPosition(left++, top++);
             Console.Write(@"\");
-            Console.SetCursorPosition(++left, ++top);
+            Console.SetCursorPosition(left, top);
             Console.Write(@"\");
         }
     }
