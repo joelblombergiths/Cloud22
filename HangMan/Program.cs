@@ -4,6 +4,7 @@ using HangMan;
 const int WORD_ROW = 13;
 const int PREV_ROW = 14;
 const int GUESS_ROW = 15;
+const int NEWGAME_ROW = 17;
 
 Gallow gallow = new();
 WordMaster wordMaster = new();
@@ -50,19 +51,23 @@ do
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Correct!");
-                isGameOver = true;
             }
             else
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Fail");
-                isGameOver = true;
             }
+
+            isGameOver = true;
         }
     }
     while (!isGameOver);
 
     PrintMaskedWord(true);
+
+    Console.ForegroundColor = ConsoleColor.DarkGray;
+    Console.SetCursorPosition(0, NEWGAME_ROW);
+    Console.WriteLine("Press the Any key to guess a new word.");
     Console.ReadKey(true);    
 }
 while (true);
