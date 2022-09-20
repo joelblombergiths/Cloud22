@@ -1,20 +1,4 @@
-﻿
-/*
-Console.WriteLine(@"   ----------");
-Console.WriteLine(@"  |          |");
-Console.WriteLine(@"  |          |");
-Console.WriteLine(@"  0          |");
-Console.WriteLine(@"\ H /        |");
-Console.WriteLine(@"  H          |");
-Console.WriteLine(@" / \         |");
-Console.WriteLine(@"/   \        |");
-Console.WriteLine(@"            /\");
-Console.WriteLine(@"           /  \");
-Console.WriteLine(@"          /    \");
-Console.WriteLine(@"         /      \");
-*/
-
-
+﻿#pragma warning disable CS8603 // Possible null reference return.
 using HangMan;
 
 const int WORD_ROW = 13;

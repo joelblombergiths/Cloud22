@@ -1,4 +1,19 @@
-﻿namespace HangMan
+﻿/*
+Console.WriteLine(@"   ----------");
+Console.WriteLine(@"  |          |");
+Console.WriteLine(@"  |          |");
+Console.WriteLine(@"  0          |");
+Console.WriteLine(@"\ H /        |");
+Console.WriteLine(@"  H          |");
+Console.WriteLine(@" / \         |");
+Console.WriteLine(@"/   \        |");
+Console.WriteLine(@"            /\");
+Console.WriteLine(@"           /  \");
+Console.WriteLine(@"          /    \");
+Console.WriteLine(@"         /      \");
+*/
+
+namespace HangMan
 {
     internal class Gallow
     {
