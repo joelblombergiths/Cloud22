@@ -21,6 +21,7 @@
         public void Reset()
         {
             stage = 0;
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
         }
     }

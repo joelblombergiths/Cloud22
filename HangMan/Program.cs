@@ -29,14 +29,13 @@ do
     gallow.Reset();
     wordMaster.NewGame();
 
-    string currGuess;
     bool isGameOver = false;
     do
     {
         PrintMaskedWord();
         PrintPrevGuesses();
 
-        currGuess = RequestUserInput();
+        string currGuess = RequestUserInput();
 
         if (currGuess.Length == 1)
         {
@@ -111,7 +110,7 @@ string RequestUserInput()
         input = Console.ReadLine();
 
         if (input?.Length == 1) isValidInput = char.IsLetter(input[0]);
-        else isValidInput = !string.IsNullOrEmpty(input);
+        else isValidInput = !string.IsNullOrWhiteSpace(input);
     }
     while (!isValidInput);
 

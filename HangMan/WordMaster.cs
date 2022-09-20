@@ -43,6 +43,7 @@ namespace HangMan
             bool foundLetter = false;
 
             if (guessedLetters.Contains(letter)) return false;
+            else if (foundLetters.Any(x => theWord[x].Equals(letter))) return true;
             else
             {
                 for (int i = 0; i < theWord.Length; i++)
@@ -62,8 +63,7 @@ namespace HangMan
 
         public bool GuessWord(string word)
         {
-            return theWord.Equals(word);
+            return theWord.Equals(word.ToLower());
         }
-
     }
 }
