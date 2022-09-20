@@ -11,10 +11,10 @@ namespace HangMan
         private List<int> foundLetters;
         private List<char> guessedLetters;
 
-        public bool IsGameWon => foundLetters.Count == theWord.Length;
-        public string RevealWord => theWord;
-        public int WordLength => theWord.Length;
         public string PrevGuesses => string.Join(",", guessedLetters);
+        public int WordLength => theWord.Length;
+        public string RevealWord => theWord;
+        public bool IsGameWon => foundLetters.Count == theWord.Length;
         
         public void NewGame()
         {

@@ -82,7 +82,7 @@
             int left = 2;
             int top = 4;
             Console.SetCursorPosition(left, top);
-            Console.Write("H");
+            Console.Write("I");
             Console.SetCursorPosition(left, top + 1);
             Console.Write("H");
         }

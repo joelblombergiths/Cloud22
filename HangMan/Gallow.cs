@@ -3,7 +3,7 @@ Console.WriteLine(@"   ----------");
 Console.WriteLine(@"  |          |");
 Console.WriteLine(@"  |          |");
 Console.WriteLine(@"  0          |");
-Console.WriteLine(@"\ H /        |");
+Console.WriteLine(@"\ I /        |");
 Console.WriteLine(@"  H          |");
 Console.WriteLine(@" / \         |");
 Console.WriteLine(@"/   \        |");
