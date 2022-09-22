@@ -1,4 +1,4 @@
-﻿namespace v38ons
+﻿namespace RPSLS
 {
     internal static class GameMaster
     {
@@ -13,9 +13,9 @@
 
         public enum Result
         {
+            Tie,
             Win,
-            Lose,
-            Tie
+            Lose
         }
 
         private static readonly List<(Choice winningChoice, Choice losingChoice, string reason)> combinations = new()
@@ -47,6 +47,12 @@
 
                 return defender == winningChoice ? Result.Win : Result.Lose;
             }
+        }
+
+        public struct CursorLocation
+        {
+            public int Left;
+            public int Top;
         }
     }
 }

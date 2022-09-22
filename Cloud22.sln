@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "v38ons", "v38ons\v38ons.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConSnake2", "ConSnake2\ConSnake2.csproj", "{119CB34B-0A57-4A59-B53F-1679414229F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPSLS", "RPSLS\RPSLS.csproj", "{1E558AF8-56C7-411A-9DC7-8975EC927CA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{119CB34B-0A57-4A59-B53F-1679414229F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{119CB34B-0A57-4A59-B53F-1679414229F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{119CB34B-0A57-4A59-B53F-1679414229F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E558AF8-56C7-411A-9DC7-8975EC927CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E558AF8-56C7-411A-9DC7-8975EC927CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E558AF8-56C7-411A-9DC7-8975EC927CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E558AF8-56C7-411A-9DC7-8975EC927CA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -71,37 +71,6 @@ PrivateConstructor p2 = PrivateConstructor.Create();
 Console.WriteLine(p2.Id);
 */
 
-/* -- Uppg 107 */
-
-Player p1 = new("P1", new int[] { 0, 0 }) { Score = 0 };
-Player p2 = new("P2", new int[] { 15, 0 }) { Score = 0 };
-
-do
-{
-    GameMaster.Choice p1Choice = p1.GetChoice();
-    GameMaster.Choice p2Choice = p2.GetChoice();
-
-    Console.SetCursorPosition(0, 2);
-    Console.WriteLine($"{p1} chose {p1Choice}".PadRight(50, ' '));
-    Console.WriteLine($"{p2} chose {p2Choice}".PadRight(50, ' '));
-
-    GameMaster.Result result = GameMaster.CheckResult(p1Choice, p2Choice, out string reason);
-
-    if (result.Equals(GameMaster.Result.Win))
-    {
-        Console.WriteLine($"{reason}. {p1} wins.".PadRight(50, ' '));
-        p1.Score++;
-    }
-    else if (result.Equals(GameMaster.Result.Lose))
-    {
-        Console.WriteLine($"{reason}. {p2} wins.".PadRight(50, ' '));
-        p2.Score++;
-    }
-    else
-    {
-        Console.WriteLine(reason.PadRight(50, ' '));
-    }
-
-    Thread.Sleep(3000);
-}
-while (true);
+/* -- Uppg 107 
+-> RPSLS
+*/
