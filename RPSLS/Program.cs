@@ -1,6 +1,8 @@
 ﻿using RPSLS;
 using static RPSLS.GameMaster;
 
+Console.CursorVisible = false;
+
 Player p0 = Player.CreatePlayer(0);
 Player p1 = Player.CreatePlayer(1);
 
@@ -35,6 +37,6 @@ do
         Console.WriteLine(reason.PadRight(50, ' '));
     }
 
-    Thread.Sleep(1000);
+    if(p0.IsComputer && p1.IsComputer) Thread.Sleep(2000);
 }
 while (true);

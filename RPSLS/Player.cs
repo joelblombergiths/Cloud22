@@ -11,7 +11,9 @@ namespace RPSLS
         
         private readonly CursorLocation _scorePos;
         private readonly string _name;
+        
         private readonly bool _isComputerPlayer;
+        public bool IsComputer => _isComputerPlayer;
 
         private int _score = 0;
         public int Score
@@ -34,6 +36,8 @@ namespace RPSLS
 
         public static Player CreatePlayer(int number)
         {
+            number = Math.Clamp(number, 0, possibleScorePos.Length - 1);
+
             Console.Clear();
 
             Console.WriteLine($"Enter name for Player {number}");
