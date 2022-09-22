@@ -11,14 +11,14 @@ p1.Score = 0;
 
 do
 {
-    Choice p1Choice = p0.GetChoice();
-    Choice p2Choice = p1.GetChoice();
+    Choice p0Choice = p0.GetChoice();
+    Choice p1Choice = p1.GetChoice();
 
     Console.SetCursorPosition(0, 2);
-    Console.WriteLine($"{p0} chose {p1Choice}".PadRight(50, ' '));
-    Console.WriteLine($"{p1} chose {p2Choice}".PadRight(50, ' '));
+    Console.WriteLine($"{p0} chose {p0Choice}".PadRight(50, ' '));
+    Console.WriteLine($"{p1} chose {p1Choice}".PadRight(50, ' '));
 
-    Result result = CheckResult(p1Choice, p2Choice, out string reason);
+    Result result = CheckResult(p0Choice, p1Choice, out string reason);
 
     if (result.Equals(Result.Win))
     {
