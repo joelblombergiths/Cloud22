@@ -66,15 +66,15 @@ namespace RPSLS
             return new Player(name, isComputer, possibleScorePos[number]);
         }
 
-        public Choice GetChoice()
-        {
-            if (_isComputerPlayer) return (Choice)Random.Shared.Next(5);
-            else return RequestUserInput();
-        }
         private void PrintScore()
         {
             Console.SetCursorPosition(_scorePos.Left, _scorePos.Top);
             Console.Write($"{_name}: {_score}");
+        }
+        public Choice GetChoice()
+        {
+            if (_isComputerPlayer) return (Choice)Random.Shared.Next(5);
+            else return RequestUserInput();
         }
 
         private static Choice RequestUserInput()
@@ -96,6 +96,5 @@ namespace RPSLS
 
             return choice;
         }
-
     }
 }
