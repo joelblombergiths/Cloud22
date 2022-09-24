@@ -74,10 +74,10 @@ namespace RPSLS
         public Choice GetChoice()
         {
             if (_isComputerPlayer) return (Choice)Random.Shared.Next(5);
-            else return RequestUserInput();
+            else return RequestUserInput(_name);
         }
 
-        private static Choice RequestUserInput()
+        private static Choice RequestUserInput(string playerName)
         {
             bool isValidInput;
             Choice choice;
@@ -85,7 +85,7 @@ namespace RPSLS
             {                
                 Console.SetCursorPosition(0, 6);
 
-                Console.Write($"Enter {string.Join(" or ", Enum.GetNames(typeof(Choice)))}: ");
+                Console.Write($"{playerName}; Enter {string.Join(" or ", Enum.GetNames(typeof(Choice)))}: ");
                 string input = Console.ReadLine();
 
                 isValidInput = Enum.TryParse(input, true, out choice);

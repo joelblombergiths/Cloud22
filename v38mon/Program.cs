@@ -76,7 +76,7 @@ foreach(StepCounter counter in counters)
 }
 */
 
-/* -- Extrauppg 97
+/* -- Extrauppg 97*/
 Console.CursorVisible = false;
 
 const int TOP = 4;
@@ -109,7 +109,7 @@ do
     Thread.Sleep(1000);
 }
 while (true);
-*/
+//*/
 
 /* Uppg 98
 

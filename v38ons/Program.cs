@@ -22,47 +22,45 @@ Console.WriteLine($"{weightedColor.Blue} {weightedColor.Red}");
 */
 
 
-/* -- Uppg 103, 104, 105
+/* -- Uppg 103, 104, 105*/
 
 
-List<Car> cars = new();
-
-foreach(int i in Enumerable.Range(0, 10)) cars.Add(new Car(i));
+List<Car> cars = Car.ManufactureCars(10);
 
 double totGreenLength = cars.FindAll(x => x.Color.Equals(ConsoleColor.Green)).Sum(x => x.Length);
 
+Console.WriteLine("Press the Any key to start!");
+Console.ReadKey(true);
 
-int place = 0;
+int hoursElapsed = 0;
 List<Car> finished = new();
 do
 {
-    Console.Clear();
     foreach (Car car in cars)
     {
-        if (!car.HasArrived)
-        {
-            car.DriveForOneHour();
-        }
-        else
+        car.DriveForOneHour();
+        
+        if (car.HasArrived)        
         {
             if(!finished.Contains(car))
             {
-                car.Place = ++place;
+                car.TotalTime = hoursElapsed;
                 finished.Add(car);
+                car.PrintGraph(true);
             }
         }
-
-        car.PrintGraph();
+        else car.PrintGraph();
     }
-
+    hoursElapsed++;
     Thread.Sleep(1000);
 }
 while (finished.Count < cars.Count);
 
-Console.WriteLine();
+Console.SetCursorPosition(0, cars.Count + 1);
 Console.WriteLine("Finish!");
+Console.ReadKey(true);
 
-*/
+//*/
 
 /* -- Uppgg 106 
 PrivateConstructor p = PrivateConstructor.Create();

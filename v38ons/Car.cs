@@ -4,19 +4,19 @@ namespace v38ons
 {
     internal class Car
     {       
-        private readonly int maxDistance = 1000;
-        private readonly int graphLength = 20;
+        private static int graphLength = 20;
+        private readonly int maxDistance = 10000;
         private readonly int _id;
         private readonly int _speed;
 
         public ConsoleColor Color;
         public double Length;
 
-        private int _place = -1;
-        public int Place 
+        private int _totalTime = -1;
+        public int TotalTime
         { 
-            get { return _place; } 
-            set { if (_place == -1) _place = value; }
+            get { return _totalTime; } 
+            set { if (_totalTime == -1) _totalTime = value; }
         }
                 
         private int _distance;
@@ -26,10 +26,11 @@ namespace v38ons
         public Car(int id)
         {
             _id = id;
+
             Color = (ConsoleColor)Random.Shared.Next(16);
             Length = Random.Shared.Next(3, 6);
-
             _speed = Random.Shared.Next(60, 241);
+
             _distance = 0;
         }
 
@@ -38,32 +39,41 @@ namespace v38ons
             _distance = Math.Min(_distance + _speed, maxDistance);
         }
 
-        public void PrintGraph()
+        public void PrintGraph(bool printFinish = false)
         {
             Console.SetCursorPosition(0, _id);
-            int pos = Math.Min(_distance / 10 % 1000 / 5, graphLength);
             
+            int pos = printFinish ? graphLength : Math.Min(_distance % maxDistance / (maxDistance / graphLength), graphLength);
+
+            Console.Write($"{_speed} km/h".PadRight(9, ' '));
+
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("|".PadRight(pos,'-'));
+            Console.Write($"|{new string('-', pos)}");
          
             Console.ForegroundColor = Color;
             Console.Write("x");
             
             Console.ForegroundColor = ConsoleColor.Gray;
-            Console.Write("|".PadLeft(graphLength - (pos -1), '-'));
-            
+            Console.Write($"{new string('-', graphLength - pos)}|");
+
             Console.Write($"{_distance} km");
 
-            if (Place > 0) Console.Write($" #{Place}");
+            if (printFinish) Console.Write($" Finished in {TotalTime} hours");
         }
 
-        public static List<Car> ManufactureCars(Car templateCar)
+        public static List<Car> ManufactureCars(int count) => ManufactureCars(count, new Car(-1));
+
+        public static List<Car> ManufactureCars(int count, Car templateCar, bool useColor = false, bool useLength = false)
         {
             List<Car> cars = new();
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < count; i++)
             {
-                cars.Add(new Car(i) { Color = templateCar.Color });
+                Car newCar = new(i);
+                if (useColor) newCar.Color = templateCar.Color;
+                if (useLength) newCar.Length = templateCar.Length;
+
+                cars.Add(newCar);
             }
 
             return cars;
