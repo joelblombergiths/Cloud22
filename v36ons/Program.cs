@@ -526,6 +526,6 @@ void uppg72()
 
 while (true)
 {
-    uppg72();
+    uppg66();
     Console.ReadKey(true);
 }
