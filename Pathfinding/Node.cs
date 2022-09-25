@@ -1,18 +1,17 @@
-﻿#pragma warning disable CS8604 // Possible null reference argument.
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-namespace Pathfinding
+﻿namespace Pathfinding
 {
     internal class Node : IComparable<Node>
     {
-        public Coords Coord { get; set; }
+        public Coords Coord { get; }
+
         public bool IsWall { get; set; }
-        public int Counter { get; set; }
+        public int Cost { get; set; }
 
         public Node(Coords coord)
         {
             Coord = coord;
             IsWall = false;
-            Counter = -1;
+            Cost = -1;
         }
 
         public override bool Equals(object? obj) => Equals((Node?)obj);
@@ -37,13 +36,13 @@ namespace Pathfinding
 
         public static bool operator !=(Node? left, Node? right) => !(left == right);
 
-        public override int GetHashCode() => (Coord, IsWall, Counter).GetHashCode();
+        public override int GetHashCode() => (Coord, IsWall, Cost).GetHashCode();
 
         public int CompareTo(Node? other)
         {
             if (other == null) return 1;
 
-            return Counter.CompareTo(other?.Counter);
+            return Cost.CompareTo(other?.Cost);
         }
     }
 }

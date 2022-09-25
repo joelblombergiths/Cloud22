@@ -2,8 +2,8 @@
 {
     internal class Coords : IEquatable<Coords>
     {
-        public int X;
-        public int Y;
+        public int X { get; }
+        public int Y { get; }
 
         public Coords(int x, int y)
         {

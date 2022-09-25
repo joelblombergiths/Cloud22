@@ -28,49 +28,6 @@
                     _map[x, y] = n;
                 }
             }
-
-            _map[0, 2].IsWall = true;
-            _map[1, 2].IsWall = true;
-            _map[2, 2].IsWall = true;
-            _map[3, 2].IsWall = true;
-
-            _map[5, 0].IsWall = true;
-            _map[5, 1].IsWall = true;
-            _map[5, 2].IsWall = true;
-            _map[5, 3].IsWall = true;
-            _map[5, 4].IsWall = true;
-
-            _map[2, 4].IsWall = true;
-            _map[3, 4].IsWall = true;
-            _map[4, 4].IsWall = true;
-            _map[2, 5].IsWall = true;
-            _map[2, 6].IsWall = true;
-            _map[2, 7].IsWall = true;
-
-            _map[4, 6].IsWall = true;
-            _map[4, 7].IsWall = true;
-            
-            _map[12, 8].IsWall = true;
-            _map[12, 7].IsWall = true;
-            _map[12, 6].IsWall = true;
-            _map[12, 4].IsWall = true;
-            _map[12, 3].IsWall = true;
-            _map[12, 2].IsWall = true;
-            _map[12, 1].IsWall = true;
-
-            _map[11, 6].IsWall = true;
-            _map[10, 6].IsWall = true;
-            _map[10, 5].IsWall = true;
-            _map[10, 4].IsWall = true;
-
-            _map[3, 7].IsWall = true;
-            _map[6, 7].IsWall = true;
-            _map[6, 8].IsWall = true;
-            _map[6, 9].IsWall = true;
-
-            _map[6, 5].IsWall = true;            
-            _map[6, 4].IsWall = true;
-            
         }
 
         public Node this[int x, int y]
@@ -83,10 +40,10 @@
             }
         }
 
-        private Node? FindNode(int x, int y) => FindNode(new(x, y));
-        private Node? FindNode(Coords coord)
+        private Node? FindNode(Coords coord) => FindNode(coord.X, coord.Y);
+        private Node? FindNode(int x, int y)
         {
-            if (coord.X >= 0 && coord.X < _map.GetLength(COL) && coord.Y >= 0 && coord.Y < _map.GetLength(ROW)) return _map[coord.X, coord.Y];
+            if (x >= 0 && x < _map.GetLength(COL) && y >= 0 && y < _map.GetLength(ROW)) return _map[x, y];
             else return null;
         }
 
@@ -98,12 +55,23 @@
             Node? endNode = FindNode(end);
             if (endNode == null) throw new ArgumentOutOfRangeException("End", "End position out of map scope");
 
+            List<Node> neighbours = EvaluateNeighbours(endNode);
+
+            List<Node> shortestPath = FindShortestPath(startNode, neighbours);
+
+            return shortestPath;
+        }
+
+        private List<Node> EvaluateNeighbours(Node endNode)
+        {
             List<Node> eval = new() { endNode };
 
             int index = 0;
             do
             {
-                List<Node> neighbours = FindNeighbours(eval[index]);
+                Node currentNode = eval[index];
+                List<Node> neighbours = FindNeighbour(currentNode);
+
                 foreach (Node node in neighbours)
                 {
                     if (!node.IsWall)
@@ -115,98 +83,103 @@
             }
             while (index < eval.Count);
 
-            if (eval.Count == 1) return new List<Node> { eval[0] };
-            else
-            {
-                List<Node> path = new() { startNode };              
-
-                for (int i = startNode.Counter; i >= 0; i--)
-                {
-                    Node currentNode = path.Last();
-
-                    List<Node> possible = new();
-
-                    Node? right = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Right, null);
-                    if (right != null) possible.Add(right);
-
-                    Node? below = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Below, null);
-                    if (below != null) possible.Add(below);
-
-                    Node? left = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Left, null);
-                    if (left != null) possible.Add(left);
-
-                    Node? above = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Above, null);
-                    if (above != null) possible.Add(above);
-
-                    possible.Sort();
-
-                    path.Add(possible.First());               
-
-                    //Node? right = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Right, null);
-                    //if (right?.Counter == i + 1)
-                    //{
-                    //    path.Add(right);
-                    //    continue;
-                    //}
-
-                    //Node? below = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Below, null);
-                    //if (below?.Counter == i + 1)
-                    //{
-                    //    path.Add(below);
-                    //    continue;
-                    //}
-
-                    //Node? left = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Left, null);
-                    //if (left?.Counter == i + 1)
-                    //{
-                    //    path.Add(left);
-                    //    continue;
-                    //}
-
-                    //Node? above = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Above, null);
-                    //if (above?.Counter == i + 1)
-                    //{
-                    //    path.Add(above);
-                    //    continue;
-                    //}
-                }
-                return path;
-            }
+            return eval;
         }
        
-        private List<Node> FindNeighbours(Node node)
+        private List<Node> FindNeighbour(Node node)
         {
             List<Node> neighbours = new();
 
             Node? left = FindNode(node.Coord.Left);
             if (left != null)
             {
-                left.Counter = node.Counter + 1;
+                left.Cost = node.Cost + 1;
                 neighbours.Add(left);
             }
 
             Node? right = FindNode(node.Coord.Right);
             if (right != null)
             {
-                right.Counter = node.Counter + 1;
+                right.Cost = node.Cost + 1;
                 neighbours.Add(right);
             }
 
             Node? above = FindNode(node.Coord.Above);
             if (above != null)
             {
-                above.Counter = node.Counter + 1;
+                above.Cost = node.Cost + 1;
                 neighbours.Add(above);
             }
 
             Node? belove = FindNode(node.Coord.Below);
             if (belove != null)
             {
-                belove.Counter = node.Counter + 1;
+                belove.Cost = node.Cost + 1;
                 neighbours.Add(belove);
             }
 
             return neighbours;
         }
+
+        private List<Node> FindShortestPath(Node startNode, List<Node> neighbours)
+        {
+            if (neighbours.Count == 1) return new List<Node> { neighbours[0] };
+            else
+            {
+                List<Node> path = new() { startNode };
+
+                for (int i = startNode.Cost; i >= 0; i--)
+                {
+                    Node currentNode = path.Last();
+
+                    List<Node> possible = new();
+
+                    Node? right = neighbours.FirstOrDefault(x => x?.Coord == currentNode.Coord.Right, null);
+                    if (right != null) possible.Add(right);
+
+                    Node? below = neighbours.FirstOrDefault(x => x?.Coord == currentNode.Coord.Below, null);
+                    if (below != null) possible.Add(below);
+
+                    Node? left = neighbours.FirstOrDefault(x => x?.Coord == currentNode.Coord.Left, null);
+                    if (left != null) possible.Add(left);
+
+                    Node? above = neighbours.FirstOrDefault(x => x?.Coord == currentNode.Coord.Above, null);
+                    if (above != null) possible.Add(above);
+
+                    possible.Sort();
+
+                    path.Add(possible.First());
+                }
+                return path;
+            }
+        }
     }
 }
+
+//Node? right = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Right, null);
+//if (right?.Counter == i + 1)
+//{
+//    path.Add(right);
+//    continue;
+//}
+
+//Node? below = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Below, null);
+//if (below?.Counter == i + 1)
+//{
+//    path.Add(below);
+//    continue;
+//}
+
+//Node? left = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Left, null);
+//if (left?.Counter == i + 1)
+//{
+//    path.Add(left);
+//    continue;
+//}
+
+//Node? above = eval.FirstOrDefault(x => x?.Coord == currentNode.Coord.Above, null);
+//if (above?.Counter == i + 1)
+//{
+//    path.Add(above);
+//    continue;
+//}
