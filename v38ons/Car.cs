@@ -61,18 +61,18 @@ namespace v38ons
             if (printFinish) Console.Write($" Finished in {TotalTime} hours");
         }
 
-        public static List<Car> ManufactureCars(int count) => ManufactureCars(count, new Car(-1));
-
-        public static List<Car> ManufactureCars(int count, Car templateCar, bool useColor = false, bool useLength = false)
+        public static List<Car> ManufactureCars(int count, Car? templateCar = null, bool useColor = false, bool useLength = false)
         {
             List<Car> cars = new();
 
             for (int i = 0; i < count; i++)
             {
                 Car newCar = new(i);
-                if (useColor) newCar.Color = templateCar.Color;
-                if (useLength) newCar.Length = templateCar.Length;
-
+                if (templateCar != null)
+                {
+                    if (useColor) newCar.Color = templateCar.Color;
+                    if (useLength) newCar.Length = templateCar.Length;
+                }
                 cars.Add(newCar);
             }
 
