@@ -121,7 +121,7 @@
             return neighbours;
         }
 
-        private List<Node> FindShortestPath(Node startNode, List<Node> neighbours)
+        private static List<Node> FindShortestPath(Node startNode, List<Node> neighbours)
         {
             if (neighbours.Count == 1) return new List<Node> { neighbours[0] };
             else
