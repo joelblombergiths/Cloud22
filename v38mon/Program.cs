@@ -48,13 +48,13 @@ box.PrintCircumference();
 
 */
 
-/* -- Uppg 94
-//User u = new();
+/* -- Uppg 94*/
+User u = new();
 
-//u.SetPassword("123abc", "kalle");
-//u.SetPassword("123abc", "abc123");
-//u.SetPassword("12345678", "123abc");
-*/
+u.SetPassword("123abc", "kalle");
+u.SetPassword("123abc", "abc123");
+u.SetPassword("12345678", "123abc");
+//*/
 
 /* -- uppg 96, 97
 List<StepCounter> counters = new();
@@ -76,7 +76,7 @@ foreach(StepCounter counter in counters)
 }
 */
 
-/* -- Extrauppg 97*/
+/* -- Extrauppg 97
 Console.CursorVisible = false;
 
 const int TOP = 4;
@@ -109,7 +109,7 @@ do
     Thread.Sleep(1000);
 }
 while (true);
-//*/
+*/
 
 /* Uppg 98
 
