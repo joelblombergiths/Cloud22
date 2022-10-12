@@ -72,8 +72,8 @@ void PrintArray(string[] cities, Func<string,string> modifier)
 }
 */
 
-/* Upg 119, 120
- */
+/* Upg 119, 120*/
+
 
 int[] numbers = new int[10];
 
@@ -96,9 +96,10 @@ foreach (int n in numbers.Where(x => x % 2 == 0))
     Console.WriteLine(n);
 }
 
+
 static class Extension
 {
-    public static T[] GenericWhere<T>(this T[] array, Predicate<T> compare)
+    public static T[] GenericWhere<T>(this T[] array, Func<T,bool> compare)
     {
         List<T> list = new();
         foreach (T n in array)
@@ -128,3 +129,32 @@ static class Extension
         }
     }
 }
+
+
+/*Uppg 121
+
+var persons = new[]
+{
+     new { FirstName = "Alfa", LastName = "Beck", Age = 7, Height = 1.27f, Weight = 30.5f },
+     new { FirstName = "Bravo", LastName = "Rosenberg", Age = 12, Height = 1.4f, Weight = 44.5f },
+     new { FirstName = "Charlie", LastName = "Apperlo", Age = 17, Height = 170f, Weight = 80.9f },
+     new { FirstName = "Delta", LastName = "Ruzsa", Age = 17, Height = 1.52f, Weight = 40.5f },
+     new { FirstName = "Echo", LastName = "Moss", Age = 21, Height = 1.53f, Weight = 60.5f },
+     new { FirstName = "Foxtrot", LastName = "Spears", Age = 22, Height = 1.6f, Weight = 60.5f },
+     new { FirstName = "Golf", LastName = "Leslie", Age = 47, Height = 1.7f, Weight = 99.5f },
+     new { FirstName = "Hotel", LastName = "Hiedler", Age = 51, Height = 1.78f, Weight = 90.5f },
+     new { FirstName = "India", LastName = "Schmitz", Age = 78, Height = 1.78f, Weight = 104.5f },
+     new { FirstName = "Juliett", LastName = "Pasternack", Age = 101, Height = 1.47f, Weight = 180.5f }
+};
+
+persons.Where(x => x.Age >= 20 && x.Age <= 40);
+
+persons.Where(x => x.FirstName.Length > x.LastName.Length).Select(x => new { x.FirstName, x.LastName });
+
+persons.Select(x => new { Name = $"{x.FirstName} {x.LastName}", BMI = x.Weight / MathF.Pow(x.Height, 2) }).Where(x => x.BMI < 20 || x.BMI > 25);
+
+persons.Select(x => new { Username = $"{x.FirstName[..3]}{x.Age}", Category = x.Age < 18 ? "Child" : "Adult" });
+
+
+
+*/
