@@ -47,7 +47,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events", "Events\Events.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp1", "WinFormsApp1\WinFormsApp1.csproj", "{3F92EE73-B68E-4C59-9B8F-BB218074B405}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guess", "Guess\Guess.csproj", "{D93F4801-0B4B-47AA-A3BC-52A8FBA626AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guess", "Guess\Guess.csproj", "{D93F4801-0B4B-47AA-A3BC-52A8FBA626AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor", "TextEditor\TextEditor.csproj", "{2E225F1D-6BFF-42DB-A9E1-6175446D4162}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,10 @@ Global
 		{D93F4801-0B4B-47AA-A3BC-52A8FBA626AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D93F4801-0B4B-47AA-A3BC-52A8FBA626AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D93F4801-0B4B-47AA-A3BC-52A8FBA626AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

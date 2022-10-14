@@ -3,11 +3,11 @@ using System.Security.Policy;
 
 namespace WinFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private int counter = 0;
         private int loopIndex = 0;
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }

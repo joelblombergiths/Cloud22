@@ -1,4 +1,4 @@
-namespace WinFormsApp1
+namespace TextEditor
 {
     internal static class Program
     {
