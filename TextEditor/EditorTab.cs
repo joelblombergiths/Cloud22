@@ -35,6 +35,7 @@
         private readonly ToolStripLabel _filePathLabel;
         private readonly ToolStripStatusLabel _lengthLabel;
         private readonly ToolStripStatusLabel _linesLabel;
+        private readonly ToolStripStatusLabel _posLabel;
 
         public event EventHandler<bool>? ContentModified;
 
@@ -56,14 +57,9 @@
             };
             Controls.Add(_body);
 
-            Bitmap bm = new(3, _body.Font.Height - 3);
-            using Graphics g = Graphics.FromImage(bm);
-            g.Clear(Color.White);
-
             _caret = new(_body)
             {
-                Style = Caret.CaretStyle.Bitmap,
-                Bitmap = bm,
+                Style = Caret.CaretStyle.Block,                
                 Size = new Size(6, _body.Font.Height - 3)
             };
 
@@ -80,6 +76,13 @@
                 Spring = true
             };
             statusStrip.Items.Add(spacing);
+
+            _posLabel = new ToolStripStatusLabel($"row: 1 col: 1")
+            {
+                Alignment = ToolStripItemAlignment.Right,
+                BorderSides = ToolStripStatusLabelBorderSides.Left
+            };
+            statusStrip.Items.Add(_posLabel);
 
             _lengthLabel = new ToolStripStatusLabel($"length: {_body.TextLength}")
             {
@@ -102,17 +105,38 @@
                 Path = path;
             }
 
-            _body.ModifiedChanged += TxtBody_ModifiedChanged;
-            _body.TextChanged += TxtBody_TextChanged;
+            _body.ModifiedChanged += Body_ModifiedChanged;
+            _body.TextChanged += Body_TextChanged;
+            _body.KeyDown += Body_KeyDown;
+            _body.Click += Body_Click;
         }
 
-        private void TxtBody_TextChanged(object? sender, EventArgs e)
+        private void UpdateCaretPos()
+        {            
+            int row = _body.GetLineFromCharIndex(_body.GetFirstCharIndexOfCurrentLine());
+            int col = _body.GetCharIndexFromPosition(_caret.Location) - _body.GetFirstCharIndexFromLine(row);
+
+            _posLabel.Text = $"row: {row + 1} col: {col + 1}";
+        }
+        private void Body_Click(object? sender, EventArgs e)
+        {
+            UpdateCaretPos();
+        }
+
+        private void Body_KeyDown(object? sender, KeyEventArgs e)
+        {
+            UpdateCaretPos();
+        }
+
+        private void Body_TextChanged(object? sender, EventArgs e)
         {
             _lengthLabel.Text = $"length: {_body.TextLength}";
             _linesLabel.Text = $"lines: {_body.Lines.Length}";
+
+            UpdateCaretPos();
         }
 
-        private void TxtBody_ModifiedChanged(object? sender, EventArgs e)
+        private void Body_ModifiedChanged(object? sender, EventArgs e)
         {
             if (_body.Modified) Text += "*";
             else Text = Text.EndsWith("*") ? Text[..^1] : Text;

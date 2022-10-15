@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 
 namespace TextEditor
@@ -67,7 +68,11 @@ namespace TextEditor
 
         public Point Location
         {
-            get { return location; }
+            get 
+            {
+                location = GetCaretPositionInternal();
+                return location;
+            }
             set
             {
                 if (!location.Equals(value))
@@ -221,6 +226,14 @@ namespace TextEditor
         {
             if (!DesignMode)
                 SetCaretPos(Left, Top);
+        }
+
+        private Point GetCaretPositionInternal()
+        {
+            Point p = Point.Empty;
+            if (!DesignMode)
+                GetCaretPos(ref p);
+            return p;
         }
 
         #endregion
