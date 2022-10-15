@@ -173,10 +173,13 @@ namespace TextEditor
 
         private void tcTabs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EditorTab current = (EditorTab)tcTabs.SelectedTab;
+            if (tcTabs.SelectedIndex >= 0)
+            {
+                EditorTab current = (EditorTab)tcTabs.SelectedTab;
 
-            saveToolStripMenuItem.Enabled = current.Modified;
-            saveAsToolStripMenuItem.Enabled = current.Modified;
+                saveToolStripMenuItem.Enabled = current.Modified;
+                saveAsToolStripMenuItem.Enabled = current.Modified;
+            }
         }
     }
 }
