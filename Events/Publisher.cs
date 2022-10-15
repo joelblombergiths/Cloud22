@@ -2,7 +2,7 @@
 {
     internal class Publisher
     {
-        public event EventHandler<MessageEvents> MessageSent;
+        public event EventHandler<MessageEvents>? MessageSent;
 
         public void SendMessage(string text)
         {

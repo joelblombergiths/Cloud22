@@ -2,38 +2,46 @@
 {
     internal class EditorTab : TabPage
     {
+        private Caret _caret;
+
         private readonly TextBox _body;
-        public string Content 
+        public string Content
         {
             get => _body.Text;
             set => _body.Text = value;
         }
 
-        public bool Modified 
+        private bool _isNewFile;
+        public bool IsNewFile => _isNewFile;
+        public bool Modified => _body.Modified;        
+        
+        public void Saved()
         {
-            get => _body.Modified;
-            set => _body.Modified = value;
+            _body.Modified = false;
+            _isNewFile = false;
         }
 
-        private readonly ToolStripLabel _filePathLabel;
         private string? _path;
-        public string? Path 
+        public string? Path
         {
             get => _path;
-            set 
+            set
             {
                 _path = value;
                 _filePathLabel.Text = _path;
             }
         }
 
+        private readonly ToolStripLabel _filePathLabel;
         private readonly ToolStripStatusLabel _lengthLabel;
         private readonly ToolStripStatusLabel _linesLabel;
 
-        public event EventHandler<bool> ContentModified;
+        public event EventHandler<bool>? ContentModified;
 
         public EditorTab(string name, string? path, string? content) : base(name)
         {
+            BorderStyle = BorderStyle.Fixed3D;
+
             StatusStrip statusStrip = new()
             {
                 Dock = DockStyle.Bottom
@@ -42,12 +50,22 @@
 
             _body = new()
             {
-                BorderStyle = BorderStyle.None,
                 Dock = DockStyle.Fill,
                 Multiline = true,
                 Text = content
             };
             Controls.Add(_body);
+
+            Bitmap bm = new(3, _body.Font.Height - 3);
+            using Graphics g = Graphics.FromImage(bm);
+            g.Clear(Color.White);
+
+            _caret = new(_body)
+            {
+                Style = Caret.CaretStyle.Bitmap,
+                Bitmap = bm,
+                Size = new Size(6, _body.Font.Height - 3)
+            };
 
             _filePathLabel = new ToolStripStatusLabel(path)
             {
@@ -77,24 +95,29 @@
             };
             statusStrip.Items.Add(_linesLabel);
 
-            Path = path;
+            if (string.IsNullOrEmpty(path)) _isNewFile = true;
+            else
+            {
+                _isNewFile = false;
+                Path = path;
+            }
 
-            _body.ModifiedChanged += _body_ModifiedChanged;
-            _body.TextChanged += _body_TextChanged;
+            _body.ModifiedChanged += TxtBody_ModifiedChanged;
+            _body.TextChanged += TxtBody_TextChanged;
         }
 
-        private void _body_TextChanged(object? sender, EventArgs e)
+        private void TxtBody_TextChanged(object? sender, EventArgs e)
         {
             _lengthLabel.Text = $"length: {_body.TextLength}";
             _linesLabel.Text = $"lines: {_body.Lines.Length}";
         }
 
-        private void _body_ModifiedChanged(object? sender, EventArgs e)
+        private void TxtBody_ModifiedChanged(object? sender, EventArgs e)
         {
             if (_body.Modified) Text += "*";
             else Text = Text.EndsWith("*") ? Text[..^1] : Text;
 
-            ContentModified.Invoke(this, _body.Modified);
+            ContentModified?.Invoke(this, _body.Modified);
         }
 
         public override string ToString()

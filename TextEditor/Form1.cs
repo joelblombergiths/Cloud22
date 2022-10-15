@@ -2,18 +2,18 @@
 namespace TextEditor
 {
     public partial class MainForm : Form
-    {
+    {        
         public MainForm()
         {
             InitializeComponent();
         }
 
-        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NewTab(string.Empty);
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
@@ -43,7 +43,7 @@ namespace TextEditor
             }
             else
             {
-                name = "New File";
+                name = GetNewTabName();
                 content = string.Empty;
                 path = string.Empty;
             }
@@ -64,12 +64,12 @@ namespace TextEditor
             saveAsToolStripMenuItem.Enabled = e;
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Save();
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Save(saveAs: true);
         }
@@ -99,15 +99,25 @@ namespace TextEditor
             writer.Write(current.Content);
             writer.Close();
 
-            current.Modified = false;
+            current.Saved();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private string GetNewTabName()
+        {
+            int inc = 1;
+            foreach(EditorTab tab in tcTabs.TabPages)
+            {
+                if (tab.IsNewFile) inc++;
+            }
+            return $"New File {inc}";
+        }
+
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CloseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (tcTabs.SelectedTab != null)
             {
@@ -166,12 +176,12 @@ namespace TextEditor
             }
         }
        
-        private void tcTabs_MouseClick(object sender, MouseEventArgs e)
+        private void TcTabs_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Middle) CloseTab();
         }
 
-        private void tcTabs_SelectedIndexChanged(object sender, EventArgs e)
+        private void TcTabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tcTabs.SelectedIndex >= 0)
             {
@@ -180,6 +190,11 @@ namespace TextEditor
                 saveToolStripMenuItem.Enabled = current.Modified;
                 saveAsToolStripMenuItem.Enabled = current.Modified;
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            NewTab(string.Empty);
         }
     }
 }
