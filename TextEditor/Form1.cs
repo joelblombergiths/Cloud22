@@ -1,3 +1,4 @@
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
 namespace TextEditor
 {
     public partial class MainForm : Form
@@ -47,21 +48,20 @@ namespace TextEditor
                 path = string.Empty;
             }
 
+            EditorTab newTab = new(name, path, content);
 
-            TextBox textBox = new()
-            {
-                BorderStyle = BorderStyle.None,
-                Dock = DockStyle.Fill,
-                Multiline = true,
-                Text = content
-            };           
-
-            EditorTab newTab = new(name, textBox, path);
-
-            newTab.Controls.Add(textBox);
+            newTab.ContentModified += Tab_ContentModified;
 
             tcTabs.TabPages.Add(newTab);
             tcTabs.SelectTab(newTab);
+
+            closeToolStripMenuItem.Enabled = true;
+        }
+
+        private void Tab_ContentModified(object? sender, bool e)
+        {
+            saveToolStripMenuItem.Enabled = e;
+            saveAsToolStripMenuItem.Enabled = e;
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -71,12 +71,12 @@ namespace TextEditor
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Save(true);
+            Save(saveAs: true);
         }
 
-        private void Save(bool saveAs = false)
+        private void Save(EditorTab? tab = null, bool saveAs = false)
         {
-            EditorTab current = (EditorTab)tcTabs.SelectedTab;
+            EditorTab current = tab is null ? (EditorTab)tcTabs.SelectedTab : tab;
             FileInfo file;
 
             if (string.IsNullOrEmpty(current.Path) || saveAs)
@@ -87,13 +87,19 @@ namespace TextEditor
                 }
                 else return;
 
-                if (!saveAs) tcTabs.SelectedTab.Text = file.Name;
+                if (!saveAs)
+                {
+                    tcTabs.SelectedTab.Text = file.Name;
+                    current.Path = file.FullName;
+                }
             }
             else file = new(current.Path);
 
             using TextWriter writer = new StreamWriter(file.OpenWrite());
-            writer.Write(current.Body.Text);
+            writer.Write(current.Content);
             writer.Close();
+
+            current.Modified = false;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -103,7 +109,74 @@ namespace TextEditor
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tcTabs.SelectedTab != null) tcTabs.TabPages.Remove(tcTabs.SelectedTab);
+            if (tcTabs.SelectedTab != null)
+            {
+                EditorTab current = (EditorTab)tcTabs.SelectedTab;
+                CloseTab(current);
+            }
+        }
+
+        private void CloseTab(EditorTab? tab = null)
+        {
+            EditorTab current = tab is null ? (EditorTab)tcTabs.SelectedTab : tab;
+
+            if (current.Modified)
+            {
+                DialogResult saveBeforeClosing = MessageBox.Show
+                (
+                    $"Save file \"{current.Text}\" before closing?",
+                    "Unsaved changes",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning
+                );
+
+                if (saveBeforeClosing == DialogResult.Cancel) return;
+                else if (saveBeforeClosing == DialogResult.Yes) Save();
+            }
+
+            tcTabs.TabPages.Remove(current);
+
+            if (tcTabs.TabPages.Count == 0) closeToolStripMenuItem.Enabled = false;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            List<EditorTab> unsavedTabs = new();
+
+            foreach (EditorTab tab in tcTabs.TabPages)
+            {
+                if (tab.Modified) unsavedTabs.Add(tab);
+            }
+
+            if(unsavedTabs.Count > 0)
+            {
+                DialogResult saveBeforeClosing = MessageBox.Show
+                (
+                    $"The following tab(s) has unsaved changes, save before closing?\n{string.Join("\n", unsavedTabs)}",
+                    "Unsaved changes",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Warning
+                );
+
+                if (saveBeforeClosing == DialogResult.Cancel) e.Cancel = true;
+                else if (saveBeforeClosing == DialogResult.Yes)
+                {
+                    unsavedTabs.ForEach(t => Save(tab: t));
+                }
+            }
+        }
+       
+        private void tcTabs_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Middle) CloseTab();
+        }
+
+        private void tcTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            EditorTab current = (EditorTab)tcTabs.SelectedTab;
+
+            saveToolStripMenuItem.Enabled = current.Modified;
+            saveAsToolStripMenuItem.Enabled = current.Modified;
         }
     }
 }
