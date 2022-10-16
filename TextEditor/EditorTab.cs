@@ -3,22 +3,21 @@
     internal class EditorTab : TabPage
     {
         private Caret _caret;
-
         private readonly TextBox _body;
+
         public string Content
         {
             get => _body.Text;
             set => _body.Text = value;
         }
-
-        private bool _isNewFile;
-        public bool IsNewFile => _isNewFile;
+        
         public bool Modified => _body.Modified;        
+        public bool IsNewFile { get; private set; }
         
         public void Saved()
         {
             _body.Modified = false;
-            _isNewFile = false;
+            IsNewFile = false;
         }
 
         private string? _path;
@@ -32,7 +31,7 @@
             }
         }
 
-        private readonly ToolStripLabel _filePathLabel;
+        private readonly ToolStripStatusLabel _filePathLabel;
         private readonly ToolStripStatusLabel _lengthLabel;
         private readonly ToolStripStatusLabel _linesLabel;
         private readonly ToolStripStatusLabel _posLabel;
@@ -98,10 +97,10 @@
             };
             statusStrip.Items.Add(_linesLabel);
 
-            if (string.IsNullOrEmpty(path)) _isNewFile = true;
+            if (string.IsNullOrEmpty(path)) IsNewFile = true;
             else
             {
-                _isNewFile = false;
+                IsNewFile = false;
                 Path = path;
             }
 
