@@ -49,7 +49,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinFormsApp1", "WinFormsApp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guess", "Guess\Guess.csproj", "{D93F4801-0B4B-47AA-A3BC-52A8FBA626AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor", "TextEditor\TextEditor.csproj", "{2E225F1D-6BFF-42DB-A9E1-6175446D4162}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextEditor", "TextEditor\TextEditor.csproj", "{2E225F1D-6BFF-42DB-A9E1-6175446D4162}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KaprekarsConstant", "KaprekarsConstant\KaprekarsConstant.csproj", "{C0075F42-98D5-4474-A88A-79DBB4F9CF68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +155,10 @@ Global
 		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E225F1D-6BFF-42DB-A9E1-6175446D4162}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0075F42-98D5-4474-A88A-79DBB4F9CF68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0075F42-98D5-4474-A88A-79DBB4F9CF68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0075F42-98D5-4474-A88A-79DBB4F9CF68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0075F42-98D5-4474-A88A-79DBB4F9CF68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
