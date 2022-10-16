@@ -76,7 +76,7 @@
             };
             statusStrip.Items.Add(spacing);
 
-            _posLabel = new ToolStripStatusLabel($"row: 1 col: 1")
+            _posLabel = new ToolStripStatusLabel($"row: 1 col: 0")
             {
                 Alignment = ToolStripItemAlignment.Right,
                 BorderSides = ToolStripStatusLabelBorderSides.Left
@@ -111,9 +111,10 @@
         }
 
         private void UpdateCaretPos()
-        {            
-            int row = _body.GetLineFromCharIndex(_body.GetFirstCharIndexOfCurrentLine());
-            int col = _body.GetCharIndexFromPosition(_caret.Location) - _body.GetFirstCharIndexFromLine(row);
+        {
+            int lineCharIndex = _body.GetFirstCharIndexOfCurrentLine();
+            int row = _body.GetLineFromCharIndex(lineCharIndex);
+            int col = _body.GetCharIndexFromPosition(_caret.Location) - Math.Abs(lineCharIndex);
 
             _posLabel.Text = $"row: {row + 1} col: {col + 1}";
         }
