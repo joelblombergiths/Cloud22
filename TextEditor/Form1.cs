@@ -1,4 +1,3 @@
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
 namespace TextEditor
 {
     public partial class MainForm : Form
@@ -15,7 +14,7 @@ namespace TextEditor
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 NewTab(openFileDialog.FileName);
             }
@@ -36,7 +35,7 @@ namespace TextEditor
                     name = file.Name;
                     path = file.FullName;
 
-                    using TextReader reader = new StreamReader(file.OpenRead());
+                    using StreamReader reader = new(file.OpenRead());
                     content = reader.ReadToEnd();
                 }
                 else throw new FileNotFoundException();
@@ -76,7 +75,7 @@ namespace TextEditor
 
         private void Save(EditorTab? tab = null, bool saveAs = false)
         {
-            EditorTab current = tab is null ? (EditorTab)tcTabs.SelectedTab : tab;
+            EditorTab current = tab ?? (EditorTab)tcTabs.SelectedTab;
             FileInfo file;
 
             if (string.IsNullOrEmpty(current.Path) || saveAs)
@@ -95,7 +94,7 @@ namespace TextEditor
             }
             else file = new(current.Path);
 
-            using TextWriter writer = new StreamWriter(file.OpenWrite());
+            using StreamWriter writer = new(file.OpenWrite());
             writer.Write(current.Content);
             writer.Close();
 
@@ -178,7 +177,10 @@ namespace TextEditor
        
         private void TcTabs_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Middle) CloseTab();
+            if (e.Button == MouseButtons.Middle)
+            {
+                CloseTab();
+            }                      
         }
 
         private void TcTabs_SelectedIndexChanged(object sender, EventArgs e)
@@ -196,5 +198,11 @@ namespace TextEditor
         {
             NewTab(string.Empty);
         }
+
+        private void DuplicateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EditorTab current = (EditorTab)tcTabs.SelectedTab;
+            NewTab(current.Path);
+        }      
     }
 }

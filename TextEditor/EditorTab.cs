@@ -2,7 +2,7 @@
 {
     internal class EditorTab : TabPage
     {
-        private Caret _caret;
+        private readonly Caret _caret;
         private readonly TextBox _body;
 
         public string Content
@@ -58,7 +58,7 @@
 
             _caret = new(_body)
             {
-                Style = Caret.CaretStyle.Block,                
+                Style = Caret.CaretStyle.Block,
                 Size = new Size(6, _body.Font.Height - 3)
             };
 
