@@ -127,7 +127,7 @@ namespace TextEditor
 
         private void CloseTab(EditorTab? tab = null)
         {
-            EditorTab current = tab is null ? (EditorTab)tcTabs.SelectedTab : tab;
+            EditorTab current = tab ?? (EditorTab)tcTabs.SelectedTab;
 
             if (current.Modified)
             {
