@@ -50,12 +50,12 @@ namespace TextEditor
             EditorTab newTab = new(name, path, content);
 
             newTab.ContentModified += Tab_ContentModified;
-
+            
             tcTabs.TabPages.Add(newTab);
             tcTabs.SelectTab(newTab);
-
+            
             closeToolStripMenuItem.Enabled = true;
-        }
+        }       
 
         private void Tab_ContentModified(object? sender, bool e)
         {
@@ -203,6 +203,24 @@ namespace TextEditor
         {
             EditorTab current = (EditorTab)tcTabs.SelectedTab;
             NewTab(current.Path);
-        }      
+        }       
+
+        private void tcTabs_MouseDown_1(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                for(int i = 0; i < tcTabs.TabPages.Count; i++)
+                {
+                    if (tcTabs.GetTabRect(i).Contains(e.Location))
+                    {
+                        MessageBox.Show(tcTabs.TabPages[i].Text);
+
+                        //tab.Focus();
+                        //tcTabs.SelectTab(tab);
+                        //break;
+                    }
+                }
+            }
+        }
     }
 }

@@ -63,6 +63,7 @@
             this.tcTabs.TabIndex = 0;
             this.tcTabs.SelectedIndexChanged += new System.EventHandler(this.TcTabs_SelectedIndexChanged);
             this.tcTabs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TcTabs_MouseClick);
+            this.tcTabs.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tcTabs_MouseDown_1);
             // 
             // tabCcontextMenu
             // 
