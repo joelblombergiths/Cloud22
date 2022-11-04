@@ -5,7 +5,7 @@ namespace Guess
         private List<GameButton> buttons = new();
         private int number;
         private int tries = 0;
-        private int boardSize = 25;
+        private int boardSize = 10;
 
         public Form1()
         {
@@ -60,7 +60,7 @@ namespace Guess
                     {
                         Size = new(size, size),
                         Location = new(x * size, y * size),
-                        Text = value.ToString(),
+                        Text = value.ToString()
                     };
                     gameButton.Click += new(GameButton_Click);
                     pGameArea.Controls.Add(gameButton);

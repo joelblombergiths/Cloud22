@@ -3,7 +3,7 @@
     internal class EditorTab : TabPage
     {
         private readonly Caret _caret;
-        private readonly TextBox _body;
+        private readonly RichTextBox _body;
 
         public string Content
         {
@@ -52,7 +52,7 @@
             {
                 Dock = DockStyle.Fill,
                 Multiline = true,
-                Text = content
+                Text = content                
             };
             Controls.Add(_body);
 
@@ -62,7 +62,7 @@
                 Size = new Size(6, _body.Font.Height - 3)
             };
 
-            _filePathLabel = new ToolStripStatusLabel(path)
+            _filePathLabel = new(path)
             {
                 Alignment = ToolStripItemAlignment.Left,
                 BorderSides = ToolStripStatusLabelBorderSides.Right,
@@ -76,21 +76,21 @@
             };
             statusStrip.Items.Add(spacing);
 
-            _posLabel = new ToolStripStatusLabel($"row: 1 col: 0")
+            _posLabel = new($"row: 1 col: 0")
             {
                 Alignment = ToolStripItemAlignment.Right,
                 BorderSides = ToolStripStatusLabelBorderSides.Left
             };
             statusStrip.Items.Add(_posLabel);
 
-            _lengthLabel = new ToolStripStatusLabel($"length: {_body.TextLength}")
+            _lengthLabel = new($"length: {_body.TextLength}")
             {
                 Alignment = ToolStripItemAlignment.Right,
                 BorderSides = ToolStripStatusLabelBorderSides.Left
             };
             statusStrip.Items.Add(_lengthLabel);
 
-            _linesLabel = new ToolStripStatusLabel($"lines: {_body.Lines.Length}")
+            _linesLabel = new($"lines: {_body.Lines.Length}")
             {
                 Alignment = ToolStripItemAlignment.Right,
                 BorderSides = ToolStripStatusLabelBorderSides.Right

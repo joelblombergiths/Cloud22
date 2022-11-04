@@ -213,7 +213,7 @@ namespace TextEditor
                 {
                     if (tcTabs.GetTabRect(i).Contains(e.Location))
                     {
-                        MessageBox.Show(tcTabs.TabPages[i].Text);
+                       // MessageBox.Show(tcTabs.TabPages[i].Text);
 
                         //tab.Focus();
                         //tcTabs.SelectTab(tab);

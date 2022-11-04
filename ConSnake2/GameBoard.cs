@@ -62,7 +62,7 @@ namespace ConSnake2
             do
             {
                 char key = Console.ReadKey(true).KeyChar;
-                isValidInput = int.TryParse(key.ToString(), out difficulty) && difficulty > 0 && difficulty <= MENU_ITEMS;
+                isValidInput = int.TryParse(key.ToString(), out difficulty) && difficulty > 0 ;
             }
             while (!isValidInput);
 
