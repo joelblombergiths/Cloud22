@@ -1,7 +1,6 @@
-﻿
-RomanToInt("MCMLXXXIV");
+﻿RomanToInt("MCMLXXXIV");
 
-int RomanToInt(string s)
+void RomanToInt(string s)
 {
     char[] letters = s.ToCharArray();
     List<string> explanations = new();
@@ -109,5 +108,4 @@ int RomanToInt(string s)
 
     Console.WriteLine(sum);
     Console.WriteLine(string.Join(", ", explanations));
-    return sum;
 }
